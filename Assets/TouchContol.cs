@@ -7,10 +7,12 @@ public class TouchContol : MonoBehaviour, IPointerDownHandler
 {
 	public GameObject ballObj;
 	public BottomWall bottomwallSc;
-	private LineRenderer line;
+	private LineRenderer ballLine;
+	private LineRenderer touchLine;
 	void Start()
 	{
-		line = GetComponent<LineRenderer>();
+		ballLine = GetComponent<LineRenderer>();
+		touchLine = ballObj.transform.GetChild(0).GetComponent<LineRenderer>();
 	}
 	public void OnPointerDown(PointerEventData eventData)
 	{
@@ -30,18 +32,25 @@ public class TouchContol : MonoBehaviour, IPointerDownHandler
 			{
 				case TouchPhase.Began:
 					oriTouchPos = touchPosition;
-					line.positionCount = 2;
+					ballLine.positionCount = 2;
+					touchLine.positionCount = 2;
 				break;
 
 				case TouchPhase.Moved:
-					line.SetPosition(0, ballObj.transform.position);
-					line.SetPosition(1, touchPosition);
-					line.Simplify(0.02f);
+					touchLine.SetPosition(0, oriTouchPos);
+					touchLine.SetPosition(1, touchPosition);
+
+					ballLine.SetPosition(0, ballObj.transform.position);
+					ballLine.SetPosition(1, ballObj.transform.position + (touchPosition - oriTouchPos));
+					ballLine.Simplify(0.02f);
 				break;
 				
 				case TouchPhase.Ended:
-					line.positionCount = 0;
-					ballObj.GetComponent<Rigidbody2D>().AddForce(( touchPosition - ballObj.transform.position ) * 100 );
+					ballLine.positionCount = 0;
+					touchLine.positionCount = 0;
+					Vector2 direction = touchPosition - oriTouchPos;
+					direction = direction.normalized;
+					ballObj.GetComponent<Rigidbody2D>().AddForce( direction * 700 );
 				break;
 			}
 		}
