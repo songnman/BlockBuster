@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchContol : MonoBehaviour, IPointerDownHandler
+public class TouchContol : MonoBehaviour
 {
 	public GameObject ballObj;
-	public BottomWall bottomwallSc;
+	public BottomWall bottomWallSc;
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
 	void Start()
 	{
 		ballLine = GetComponent<LineRenderer>();
 		touchLine = ballObj.transform.GetChild(0).GetComponent<LineRenderer>();
-	}
-	public void OnPointerDown(PointerEventData eventData)
-	{
-		// Debug.Log("Touch!");
-		// if(bottomwallSc.isBallStickBottom)
-		// 	ballObj.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-500,500),Random.Range(500,800)) );
-	}
+	}	
 	Vector3 oriTouchPos;
+	Vector2 direction;
+	Vector2 shootDirection;
+	bool isSwipeEnable = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
-		if((Input.touchCount > 0 || touchFingerId > 0) && bottomwallSc.isBallStickBottom)
+		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom)
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			touchPosition.z = 0f;
@@ -31,26 +28,41 @@ public class TouchContol : MonoBehaviour, IPointerDownHandler
 			switch (touchPhase)
 			{
 				case TouchPhase.Began:
+					isSwipeEnable = true;
 					oriTouchPos = touchPosition;
 					ballLine.positionCount = 2;
 					touchLine.positionCount = 2;
 				break;
 
 				case TouchPhase.Moved:
+					if(!isSwipeEnable)
+						break;
 					touchLine.SetPosition(0, oriTouchPos);
 					touchLine.SetPosition(1, touchPosition);
-
-					ballLine.SetPosition(0, ballObj.transform.position);
-					ballLine.SetPosition(1, ballObj.transform.position + (touchPosition - oriTouchPos));
-					ballLine.Simplify(0.02f);
+					direction = touchPosition - oriTouchPos;
+					direction = direction.normalized;
+					if(direction.y > 0.3)
+					{
+						ballLine.SetPosition(0, ballObj.transform.position);
+						ballLine.SetPosition(1, (Vector2)ballObj.transform.position + (direction * 20) );
+						shootDirection = direction;
+					}
+					else
+					{
+						ballLine.SetPosition(0, ballObj.transform.position);
+						ballLine.SetPosition(1, (Vector2)ballObj.transform.position + new Vector2(Mathf.Sign(direction.x), 0.2f) * 20 );
+						shootDirection = (new Vector2(Mathf.Sign(direction.x), 0.2f)).normalized;
+					}
 				break;
-				
+
 				case TouchPhase.Ended:
+					if(!isSwipeEnable)
+						break;
+					bottomWallSc.isBallStickBottom = false;
+					isSwipeEnable = false;
 					ballLine.positionCount = 0;
 					touchLine.positionCount = 0;
-					Vector2 direction = touchPosition - oriTouchPos;
-					direction = direction.normalized;
-					ballObj.GetComponent<Rigidbody2D>().AddForce( direction * 700 );
+					ballObj.GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 );
 				break;
 			}
 		}
