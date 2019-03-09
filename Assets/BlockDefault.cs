@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BlockDefault : MonoBehaviour
 {
-	int leftCount = 3;
-	Text leftCountText;
+	public int leftCount = 3;
+	public Text leftCountText;
 	void Start()
 	{
 		leftCountText = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Text>();
