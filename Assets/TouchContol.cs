@@ -41,7 +41,7 @@ public class TouchContol : MonoBehaviour
 					touchLine.SetPosition(1, touchPosition);
 					direction = touchPosition - oriTouchPos;
 					direction = direction.normalized;
-					if(direction.y > 0.3)
+					if(direction.y > 0.2)
 					{
 						ballLine.SetPosition(0, ballObj.transform.position);
 						ballLine.SetPosition(1, (Vector2)ballObj.transform.position + (direction * 20) );
