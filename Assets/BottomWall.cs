@@ -20,7 +20,7 @@ public class BottomWall : MonoBehaviour
 		{
 			Debug.Log("Found ball");
 			isBallStickBottom = true;
-			blockManagerSc.CreateBlockLine();
+			blockManagerSc.CreateBlockLineAndMove();
 			other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		}
 	}
