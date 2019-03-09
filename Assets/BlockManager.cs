@@ -22,14 +22,28 @@ public class BlockManager : MonoBehaviour
 	public GameObject bonusBallPrefab;
 	public Text shootCountText;
 	int blockCount = 0;
-	int shootCount = -1;
+	int shootCount = 0;
 	int maxBlockCount = 2;
+	int MaxBlockCount
+	{
+		get
+		{
+			if		(shootCount + 2 > 10)
+				return 3;
+			else if (shootCount + 2 > 100)
+				return 4;
+			else if (shootCount + 2 > 200)
+				return 5;
+			else
+				return 2;
+		}
+	}
 	int blockHP = 1;
 	int BlockHP
 	{
 		get
 		{
-			return shootCount + 2;
+			return shootCount + 1;
 		}
 	}
 	void Start()
@@ -38,6 +52,7 @@ public class BlockManager : MonoBehaviour
 	}
 	public void CreateBlockLineAndMove()
 	{
+		bool isBonusBallExist = false;
 		while(blockCount < 1) //[2019-03-09 17:05:30] 블럭이 최소 1개 이상일때까지 계속.
 		{
 			for (int i = 0; i < 7; i++)
@@ -54,8 +69,9 @@ public class BlockManager : MonoBehaviour
 					
 					blockCount++;
 				}
-				else if(RandomNum)
+				else if(RandomNum && !isBonusBallExist)
 				{
+					isBonusBallExist = true;
 					GameObject bonusBallObj = Instantiate(bonusBallPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
 					// BonusBall bonusBallSc = bonusBallObj.GetComponent<BonusBall>();
 					bonusBallObj.transform.SetParent(gameObject.transform);

@@ -170,7 +170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 6574236819396182875, guid: 7d304e8795b315e4991c7465ef6736e3,
     type: 3}
-  BonusBallPrefab: {fileID: 0}
+  bonusBallPrefab: {fileID: 695953660812440118, guid: 5cfc5cdb66a37ed42bc25a9bc9a64281,
+    type: 3}
   shootCountText: {fileID: 164800818}
 --- !u!1 &14807854
 GameObject:
@@ -255,7 +256,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 1
   m_Materials:
-  - {fileID: 2100000, guid: e1f03243fda92624a8c5118ee16fbf83, type: 2}
+  - {fileID: 2100000, guid: ee5d7d85f1a061447812f62ad1fc28f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -326,7 +327,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 2
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -436,9 +437,10 @@ GameObject:
   m_Component:
   - component: {fileID: 164827397}
   - component: {fileID: 164827398}
-  m_Layer: 0
+  - component: {fileID: 164827399}
+  m_Layer: 10
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -481,8 +483,20 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 9}
+  m_Size: {x: 1, y: 7}
   m_EdgeRadius: 0
+--- !u!114 &164827399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164827396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d05ea0bb87e414ca0684a5e1a4ea67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &186998021
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +561,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 761325761}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.22}
   m_AnchorMax: {x: 1, y: 0.78}
@@ -567,7 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.759434, b: 0.759434, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -591,6 +605,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288517796}
   m_CullTransparentMesh: 0
+--- !u!1001 &310032834
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 695953660812440118, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_Name
+      value: FakeBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304081533706939521, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a4910d5484fa6f47975cdd9c3b48e75, type: 3}
 --- !u!1 &326462413
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,9 +684,10 @@ GameObject:
   m_Component:
   - component: {fileID: 326462414}
   - component: {fileID: 326462415}
-  m_Layer: 0
-  m_Name: UpperWall
-  m_TagString: Untagged
+  - component: {fileID: 326462416}
+  m_Layer: 10
+  m_Name: TopWall
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -646,8 +730,115 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9, y: 1}
+  m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &326462416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326462413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d05ea0bb87e414ca0684a5e1a4ea67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &491076613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491076617}
+  - component: {fileID: 491076616}
+  - component: {fileID: 491076614}
+  - component: {fileID: 491076615}
+  m_Layer: 5
+  m_Name: ShootBallRemainText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &491076614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491076613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d37128dfefa92264587bf6749158e862, type: 3}
+    m_FontSize: 70
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 164
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: x1
+--- !u!114 &491076615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491076613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
+--- !u!222 &491076616
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491076613}
+  m_CullTransparentMesh: 0
+--- !u!224 &491076617
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491076613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0002844, y: 1.0002844, z: 1.0002844}
+  m_Children: []
+  m_Father: {fileID: 761325761}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 23, y: -1057}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +1043,7 @@ RectTransform:
   m_Children:
   - {fileID: 1848656906}
   - {fileID: 164800821}
+  - {fileID: 491076617}
   - {fileID: 2013690905}
   - {fileID: 288517797}
   m_Father: {fileID: 0}
@@ -918,7 +1110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9, y: 1}
+  m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &810910902
 MonoBehaviour:
@@ -985,9 +1177,9 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
-  m_RendererPriority: 1
+  m_RendererPriority: 136
   m_Materials:
-  - {fileID: 2100000, guid: e1f03243fda92624a8c5118ee16fbf83, type: 2}
+  - {fileID: 2100000, guid: ee5d7d85f1a061447812f62ad1fc28f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1006,7 +1198,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
@@ -1058,11 +1250,17 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 2
-    shadowBias: 0.5
+    textureMode: 1
+    shadowBias: 0
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &955920837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 695953660812440118, guid: 9a4910d5484fa6f47975cdd9c3b48e75,
+    type: 3}
+  m_PrefabInstance: {fileID: 310032834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1300936088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,9 +1271,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1300936089}
   - component: {fileID: 1300936090}
-  m_Layer: 0
+  - component: {fileID: 1300936091}
+  m_Layer: 10
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1118,8 +1317,20 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 9}
+  m_Size: {x: 1, y: 7}
   m_EdgeRadius: 0
+--- !u!114 &1300936091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300936088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d05ea0bb87e414ca0684a5e1a4ea67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1460473454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1526,7 @@ RectTransform:
   - {fileID: 916089306}
   - {fileID: 102193281}
   m_Father: {fileID: 761325761}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1339,14 +1550,17 @@ MonoBehaviour:
   shootPos: {fileID: 0}
   ballPrefab: {fileID: 1028812029201110732, guid: 200e0597d48a21b4a9936f90c93bfaa5,
     type: 3}
+  fakeBallPrefab: {fileID: 955920837}
   increaseBallPrefab: {fileID: 695953660812440118, guid: 5cfc5cdb66a37ed42bc25a9bc9a64281,
     type: 3}
   ballGroup: {fileID: 539478924}
   bottomWallSc: {fileID: 810910902}
+  dotLineObj: {fileID: 0}
   blockManagerSc: {fileID: 6216217}
   stickBallCount: 0
   ballList: []
   notFirstBallList: []
+  shootBallRemainText: {fileID: 491076614}
 --- !u!114 &2013690907
 MonoBehaviour:
   m_ObjectHideFlags: 0

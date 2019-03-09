@@ -23,7 +23,13 @@ public class BlockDefault : MonoBehaviour
 			leftCount--;
 			leftCountText.text = leftCount.ToString("N0");
 			if(leftCount < 1)
+			{
+				if(gameObject.transform.parent.childCount < 2)
+					Debug.Log("front");
+
 				Destroy(gameObject);
+			}
+				
 		}
 	}
 }
