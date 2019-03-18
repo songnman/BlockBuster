@@ -17,7 +17,7 @@ public class BottomWall : MonoBehaviour
 		if(other.gameObject.CompareTag("Ball") && other.gameObject.GetComponent<BallDefault>().isBallCollision)
 		{
 			touchContolSc.stickBallCount++;
-			// Debug.Log(touchContolSc.stickBallCount);
+			Debug.Log(touchContolSc.stickBallCount);
 			other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 			
 			if(touchContolSc.firstBallObj != null)
@@ -27,7 +27,7 @@ public class BottomWall : MonoBehaviour
 			else
 			{
 				touchContolSc.firstBallObj = other.gameObject;
-				Debug.Log("FirstBall Assigned");
+				// Debug.Log("FirstBall Assigned");
 			}
 		}
 	}

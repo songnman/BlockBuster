@@ -8,11 +8,31 @@ using UnityEngine.SceneManagement;
 public class BlockManager : MonoBehaviour
 {
 	float randomNumFloat = 0.3f;
+	float RandomNumFloat
+	{
+		get
+		{
+			if		(shootCount + 1 < 50)
+				return 0.3f;
+			else if (shootCount + 1 < 100)
+				return 0.4f;
+			else if (shootCount + 1 < 150)
+				return 0.5f;
+			else if (shootCount + 1 < 200)
+				return 0.6f;
+			else if (shootCount + 1 < 250)
+				return 0.7f;
+			else if (shootCount + 1 < 300)
+				return 0.8f;
+			else
+				return 0.9f;
+		}
+	}
 	bool RandomNum
 	{
 		get
 		{
-			if(Random.Range(0,1f) < randomNumFloat)
+			if(Random.Range(0,1f) < RandomNumFloat)
 				return true;
 			else
 				return false;
@@ -21,8 +41,7 @@ public class BlockManager : MonoBehaviour
 	public GameObject blockPrefab;
 	public GameObject bonusBallPrefab;
 	public Text shootCountText;
-	int blockCount = 0;
-	int shootCount = 0;
+	[HideInInspector]public int shootCount = 0;
 	int maxBlockCount = 2;
 	int MaxBlockCount
 	{
@@ -53,11 +72,13 @@ public class BlockManager : MonoBehaviour
 	public void CreateBlockLineAndMove()
 	{
 		bool isBonusBallExist = false;
-		while(blockCount < 1) //[2019-03-09 17:05:30] 블럭이 최소 1개 이상일때까지 계속.
+		int blockCount = 0;
+
+		while(blockCount < 1 || !isBonusBallExist) //[2019-03-09 17:05:30] 블럭이 최소 1개 이상일때까지 계속.
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (RandomNum && blockCount < maxBlockCount)
+				if (RandomNum && blockCount < MaxBlockCount)
 				{
 					GameObject blockObj = Instantiate(blockPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
 					BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();

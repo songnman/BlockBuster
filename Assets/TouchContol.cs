@@ -18,14 +18,16 @@ public class TouchContol : MonoBehaviour
 	public BlockManager blockManagerSc;
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
+	public bool isButtonDown = false;
 	
 	void Start()
 	{
 		ballLine = transform.GetChild(0).GetComponent<LineRenderer>();
 		touchLine = transform.GetChild(1).GetComponent<LineRenderer>();
-		
 		// ballLine.material.mainTextureScale.Normalize();
 		fakeBallPrefab.SetActive(false);
+		skipButton.interactable = false;
+
 
 		
 		// firstBallObj = ballGroup.transform.GetChild(0).gameObject;
@@ -41,7 +43,7 @@ public class TouchContol : MonoBehaviour
 	bool isSwipeEnable = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
-		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom)
+		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom )
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			touchPosition.z = 0f;
@@ -50,6 +52,11 @@ public class TouchContol : MonoBehaviour
 			{
 				case TouchPhase.Began:
 					// Debug.Log("Began");
+					if(touchPosition.y > 3.5f)
+					{
+						isSwipeEnable = false;
+						break;
+					}
 					fakeBallPrefab.SetActive(true);
 					shootPos = firstBallObj.transform;
 					oriTouchPos = touchPosition;
@@ -59,8 +66,15 @@ public class TouchContol : MonoBehaviour
 				break;
 
 				case TouchPhase.Moved:
-					if(!isSwipeEnable)
+					if(!isSwipeEnable || touchPosition.y > 3.5f)
+					{
+						isSwipeEnable = false;
+						fakeBallPrefab.SetActive(false);
+						ballLine.positionCount = 0;
+						touchLine.positionCount = 0;
 						break;
+					}
+					// Debug.Log(touchPosition.y);
 					touchLine.SetPosition(0, oriTouchPos);
 					touchLine.SetPosition(1, touchPosition);
 					ballLine.material.mainTextureOffset += Vector2.left * 0.1f;
@@ -87,26 +101,34 @@ public class TouchContol : MonoBehaviour
 				break;
 
 				case TouchPhase.Ended:
-					if(!isSwipeEnable)
-						break;
+
 					// Debug.Log("End");
 					fakeBallPrefab.SetActive(false);
-					isSwipeEnable = false;
 					ballLine.positionCount = 0;
 					touchLine.positionCount = 0;
-					 ballCount = 10;
+					if(!isSwipeEnable || touchPosition.y > 3.5f)
+						break;
+					isSwipeEnable = false;
+					//  ballCount = 10;
 					StartCoroutine("ShootBall");
 				break;
 			}
 		}
 	}
 	[HideInInspector]public int stickBallCount = 0;
+	[HideInInspector]public int shootBallCount = 0;
+
 	[HideInInspector] public List<GameObject> ballList;
 	[HideInInspector] public List<GameObject> notFirstBallList;
 	public Text shootBallRemainText;
+	public Button skipButton;
+	public void SkipShootBall()
+	{
+		stickBallCount = shootBallCount;
+	}
 	public IEnumerator ShootBall()
 	{
-		int shootBallCount = ballCount;
+		shootBallCount = ballCount;
 		int shootBallRemain = ballCount;
 		notFirstBallList = new List<GameObject>();
 		Destroy(firstBallObj);
@@ -121,8 +143,15 @@ public class TouchContol : MonoBehaviour
 			ballList[i].transform.SetParent(ballGroup.transform);
 			ballList[i].transform.position = shootPos.position;
 		}
+		
 		for (int i = 0; i < ballList.Count; i++)
 		{
+			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10)
+				skipButton.interactable = true;
+
+			if(stickBallCount >= shootBallCount)
+				break;
+
 			ballList[i].GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 );
 			yield return new WaitForSeconds(shootInterval);
 			shootBallRemain--;
@@ -132,15 +161,22 @@ public class TouchContol : MonoBehaviour
 				shootBallRemainText.gameObject.SetActive(false);
 			}
 		}
+		// if(ballCount > 100)
+		// {
+		// 	Debug.Log("wait Until stickball up 10");
+		// 	yield return new WaitUntil(()=> firstBallObj != null && stickBallCount > 10);
+		// 	skipButton.interactable = true;
+		// }
 		
-		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount == shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
 		
-		Debug.Log("All Balls are Stuck");
+		skipButton.interactable = false;
+		// Debug.Log("All Balls are Stuck");
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
 		{
 			if(item != firstBallObj)
 				Destroy(item);
-			yield return new WaitForFixedUpdate();
+			// yield return new WaitForFixedUpdate();
 		}
 		shootBallRemain = ballCount;
 		shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
@@ -149,12 +185,20 @@ public class TouchContol : MonoBehaviour
 
 
 		stickBallCount = 0;
+		shootBallCount = 0;
 		// Debug.Log(stickBallCount);
 		bottomWallSc.isBallStickBottom = true;
 		blockManagerSc.CreateBlockLineAndMove();
 	}
+	private void OnCollisionEnter2D(Collision2D other) {
+		isButtonDown = true;
+	}
+	private void OnCollisionExit2D(Collision2D other) {
+		isButtonDown = false;
+	}
 	private void Update()
 	{
+		
 		foreach (Touch touch in Input.touches)
 		{
 			HandleTouch(touch.fingerId, touch.position, touch.phase);
@@ -175,5 +219,11 @@ public class TouchContol : MonoBehaviour
 				HandleTouch(10, Input.mousePosition, TouchPhase.Ended);
 			}
 		}
+	}
+	public void ShootCountInc()
+	{
+		ballCount += 10;
+		blockManagerSc.shootCount += 10;
+		blockManagerSc.shootCountText.text = blockManagerSc.shootCount.ToString("N0");
 	}
 }
