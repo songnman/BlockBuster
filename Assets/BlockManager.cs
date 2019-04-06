@@ -39,6 +39,7 @@ public class BlockManager : MonoBehaviour
 		}
 	}
 	public GameObject blockPrefab;
+	public GameObject block02Prefab;
 	public GameObject bonusBallPrefab;
 	public Text shootCountText;
 	[HideInInspector]public int shootCount = 0;
@@ -65,6 +66,23 @@ public class BlockManager : MonoBehaviour
 			return shootCount + 1;
 		}
 	}
+	public void CreateBlock02()
+	{
+		GameObject blockObj = Instantiate(block02Prefab, new Vector3(0, 0), Quaternion.Euler(0,0,45) );
+		BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
+		blockObj.transform.SetParent(gameObject.transform);
+		
+		blockDefaultSc.leftCount = (BlockHP - 1) * 2;
+		blockDefaultSc.leftCountText = blockObj.transform.GetChild(0).GetChild(0).GetComponent<Text>();
+		blockDefaultSc.leftCountText.text = blockDefaultSc.leftCount.ToString("N0");
+
+		// int childCount = gameObject.transform.childCount;
+		// for (int i = 0; i < childCount; i++)
+		// {
+		// 	gameObject.transform.GetChild(i).transform.position += new Vector3(0, -0.75f);
+		// }
+
+	}
 	void Start()
 	{
 		CreateBlockLineAndMove();
@@ -73,29 +91,31 @@ public class BlockManager : MonoBehaviour
 	{
 		bool isBonusBallExist = false;
 		int blockCount = 0;
+		List<int> blockLine = new List<int>();
 
 		while(blockCount < 1 || !isBonusBallExist) //[2019-03-09 17:05:30] 블럭이 최소 1개 이상일때까지 계속.
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (RandomNum && blockCount < MaxBlockCount)
+				if (RandomNum && blockCount < MaxBlockCount && !blockLine.Contains(i))
 				{
 					GameObject blockObj = Instantiate(blockPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
 					BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 					blockObj.transform.SetParent(gameObject.transform);
-					
+	
 					blockDefaultSc.leftCount = BlockHP;
 					blockDefaultSc.leftCountText = blockObj.transform.GetChild(0).GetChild(0).GetComponent<Text>();
 					blockDefaultSc.leftCountText.text = blockDefaultSc.leftCount.ToString("N0");
-					
+					blockLine.Add(i);
 					blockCount++;
 				}
-				else if(RandomNum && !isBonusBallExist)
+				else if(RandomNum && !isBonusBallExist && !blockLine.Contains(i))
 				{
 					isBonusBallExist = true;
 					GameObject bonusBallObj = Instantiate(bonusBallPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
 					// BonusBall bonusBallSc = bonusBallObj.GetComponent<BonusBall>();
 					bonusBallObj.transform.SetParent(gameObject.transform);
+					blockLine.Add(i);
 				}
 			}
 		}
@@ -110,5 +130,9 @@ public class BlockManager : MonoBehaviour
 		}
 		shootCount++;
 		shootCountText.text = shootCount.ToString("N0");
+	}
+	private void Update() {
+		if(Input.GetKeyDown(KeyCode.F1))
+			CreateBlockLineAndMove();
 	}
 }

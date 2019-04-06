@@ -19,6 +19,7 @@ public class TouchContol : MonoBehaviour
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
 	public bool isButtonDown = false;
+	public int collisionBlockFailCount = 0;
 	
 	void Start()
 	{
@@ -34,12 +35,24 @@ public class TouchContol : MonoBehaviour
 		
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
-		firstBallObj.transform.position = new Vector2 (0, -3.2f);
+		firstBallObj.transform.position = new Vector2 (0, -3.4f);
 		ballCount = 1;
 	}	
 	Vector3 oriTouchPos;
 	Vector2 direction;
 	Vector2 shootDirection;
+	float BallSpeedFactor
+	{
+		get
+		{
+			if		(ballCount > 100)
+				return 1.5f;
+			else if	(ballCount > 200)
+				return 2.0f;
+			else
+				return 1.0f;
+		}
+	}
 	bool isSwipeEnable = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
@@ -80,9 +93,10 @@ public class TouchContol : MonoBehaviour
 					ballLine.material.mainTextureOffset += Vector2.left * 0.1f;
 					direction = touchPosition - oriTouchPos;
 					direction = direction.normalized;
-					if(direction.y > 0.2f)
+					float directionYLimit = 0.25f;
+					if(direction.y > directionYLimit)
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.18f, direction,100,LayerMask.GetMask("Block"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.11f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 						
 						ballLine.SetPosition(0, shootPos.position);
@@ -91,12 +105,13 @@ public class TouchContol : MonoBehaviour
 					}
 					else
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.18f, new Vector2(Mathf.Sign(direction.x), 0.2f),100,LayerMask.GetMask("Block"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.11f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 
 						ballLine.SetPosition(0, shootPos.position);
-						ballLine.SetPosition(1, (Vector2)shootPos.position + new Vector2(Mathf.Sign(direction.x), 0.2f) * 20 );
-						shootDirection = (new Vector2(Mathf.Sign(direction.x), 0.2f)).normalized;
+						// ballLine.SetPosition(1, (Vector2)shootPos.position + new Vector2(Mathf.Sign(direction.x), directionYLimit) * 20 );
+						ballLine.SetPosition(1, hits.point);
+						shootDirection = (new Vector2(Mathf.Sign(direction.x), directionYLimit)).normalized;
 					}
 				break;
 
@@ -134,7 +149,7 @@ public class TouchContol : MonoBehaviour
 		Destroy(firstBallObj);
 		firstBallObj = null;
 		bottomWallSc.isBallStickBottom = false;
-		float shootInterval = 0.05f;
+		float shootInterval = 0.03f;
 		ballList = new List<GameObject>();
 		// ballList.Clear();
 		for (int i = 0; i < shootBallCount; i++)
@@ -146,13 +161,14 @@ public class TouchContol : MonoBehaviour
 		
 		for (int i = 0; i < ballList.Count; i++)
 		{
-			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10)
+			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
 				skipButton.interactable = true;
 
 			if(stickBallCount >= shootBallCount)
 				break;
 
-			ballList[i].GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 );
+			ballList[i].GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 /* * BallSpeedFactor*/ );
+			
 			yield return new WaitForSeconds(shootInterval);
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
@@ -183,7 +199,7 @@ public class TouchContol : MonoBehaviour
 		shootBallRemainText.gameObject.SetActive(true);
 		shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -1);
 
-
+		collisionBlockFailCount = 0;
 		stickBallCount = 0;
 		shootBallCount = 0;
 		// Debug.Log(stickBallCount);

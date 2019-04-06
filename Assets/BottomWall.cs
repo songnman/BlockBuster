@@ -14,21 +14,30 @@ public class BottomWall : MonoBehaviour
 	}
 	private void OnCollisionEnter2D(Collision2D other) 
 	{
-		if(other.gameObject.CompareTag("Ball") && other.gameObject.GetComponent<BallDefault>().isBallCollision)
+		if(other.gameObject.CompareTag("Ball"))
 		{
-			touchContolSc.stickBallCount++;
-			Debug.Log(touchContolSc.stickBallCount);
-			other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-			
-			if(touchContolSc.firstBallObj != null)
+			if(other.gameObject.GetComponent<BallDefault>().isBallCollision)
 			{
-				touchContolSc.notFirstBallList.Add(other.gameObject);
+				touchContolSc.stickBallCount++;
+				// Debug.Log(touchContolSc.stickBallCount);
+				other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+				if(!other.gameObject.GetComponent<BallDefault>().isCollisionBlock)
+				{
+					touchContolSc.collisionBlockFailCount++;
+					Debug.Log(touchContolSc.collisionBlockFailCount);
+				}
+
+				if(touchContolSc.firstBallObj != null)
+				{
+					touchContolSc.notFirstBallList.Add(other.gameObject);
+				}
+				else
+				{
+					touchContolSc.firstBallObj = other.gameObject;
+					// Debug.Log("FirstBall Assigned");
+				}
 			}
-			else
-			{
-				touchContolSc.firstBallObj = other.gameObject;
-				// Debug.Log("FirstBall Assigned");
-			}
+
 		}
 	}
 
