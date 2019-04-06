@@ -22,7 +22,7 @@ public class BlockDefault : MonoBehaviour
 		if		(other.gameObject.tag == "Ball")
 		{
 			if(gameObject.name != "Block02(Clone)")
-				Instantiate(Resources.Load("Particles/Square"), gameObject.transform.position, Quaternion.identity);
+				Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
 
 			// Debug.Log("Ball Collision!");
 			if(gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Spine;
+using Spine.Unity;
 
 public class TouchContol : MonoBehaviour
 {
@@ -36,6 +38,9 @@ public class TouchContol : MonoBehaviour
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
 		firstBallObj.transform.position = new Vector2 (0, -3.4f);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , false, 0);
+
 		ballCount = 1;
 	}	
 	Vector3 oriTouchPos;
@@ -96,7 +101,7 @@ public class TouchContol : MonoBehaviour
 					float directionYLimit = 0.25f;
 					if(direction.y > directionYLimit)
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.11f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.3f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 						
 						ballLine.SetPosition(0, shootPos.position);
@@ -105,7 +110,7 @@ public class TouchContol : MonoBehaviour
 					}
 					else
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.11f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.3f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 
 						ballLine.SetPosition(0, shootPos.position);
@@ -143,12 +148,15 @@ public class TouchContol : MonoBehaviour
 	}
 	public IEnumerator ShootBall()
 	{
+		bottomWallSc.isBallStickBottom = false;
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_on" , false);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "loop" , false, 0);
+		yield return new WaitForSeconds(0.4f);
 		shootBallCount = ballCount;
 		int shootBallRemain = ballCount;
 		notFirstBallList = new List<GameObject>();
 		Destroy(firstBallObj);
 		firstBallObj = null;
-		bottomWallSc.isBallStickBottom = false;
 		float shootInterval = 0.03f;
 		ballList = new List<GameObject>();
 		// ballList.Clear();
@@ -157,6 +165,8 @@ public class TouchContol : MonoBehaviour
 			ballList.Add(Instantiate(ballPrefab));
 			ballList[i].transform.SetParent(ballGroup.transform);
 			ballList[i].transform.position = shootPos.position;
+			// ballList[i].transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "loop" , false);
+
 		}
 		
 		for (int i = 0; i < ballList.Count; i++)
@@ -188,12 +198,21 @@ public class TouchContol : MonoBehaviour
 		
 		skipButton.interactable = false;
 		// Debug.Log("All Balls are Stuck");
+		
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , false, 0);
+
+		
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
 		{
 			if(item != firstBallObj)
-				Destroy(item);
+			{
+				StartCoroutine("DestroyBalls" , item);
+			}
 			// yield return new WaitForFixedUpdate();
 		}
+		yield return new WaitForSeconds(1.167f);
+
 		shootBallRemain = ballCount;
 		shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
 		shootBallRemainText.gameObject.SetActive(true);
@@ -206,6 +225,18 @@ public class TouchContol : MonoBehaviour
 		bottomWallSc.isBallStickBottom = true;
 		blockManagerSc.CreateBlockLineAndMove();
 	}
+	IEnumerator DestroyBalls(GameObject item)
+	{
+		Vector3 oriPos = item.transform.position;
+		for (int i = 0; i < 10; i++)
+		{
+			item.transform.position = Vector3.Lerp(oriPos, firstBallObj.transform.position, i * 0.1f);
+			yield return new WaitForFixedUpdate();
+		}
+		Destroy(item);
+		Debug.Log("done");
+	}
+
 	private void OnCollisionEnter2D(Collision2D other) {
 		isButtonDown = true;
 	}

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine;
+using Spine.Unity;
 
 public class BallDefault : MonoBehaviour
 {
@@ -14,8 +16,10 @@ public class BallDefault : MonoBehaviour
 
 		if(other.gameObject.tag == "Block")
 		{
-			
-			Instantiate(Resources.Load("Particles/Ember"), other.contacts[0].point, Quaternion.identity);
+			GameObject particle;
+			particle = Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, gameObject.transform.position, Quaternion.identity);
+
+			SkeletonAnimation skeleton = particle.GetComponent<SkeletonAnimation>();
 			isCollisionBlock = true;
 		}
 

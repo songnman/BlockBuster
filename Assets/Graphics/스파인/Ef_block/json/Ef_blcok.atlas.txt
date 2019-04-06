@@ -1,0 +1,55 @@
+
+Ef_blcok.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ef_01
+  rotate: false
+  xy: 2, 38
+  size: 140, 108
+  orig: 140, 108
+  offset: 0, 0
+  index: -1
+ef_02
+  rotate: false
+  xy: 306, 342
+  size: 140, 108
+  orig: 140, 108
+  offset: 0, 0
+  index: -1
+ef_03
+  rotate: false
+  xy: 144, 38
+  size: 140, 108
+  orig: 140, 108
+  offset: 0, 0
+  index: -1
+ef_04
+  rotate: false
+  xy: 306, 232
+  size: 140, 108
+  orig: 140, 108
+  offset: 0, 0
+  index: -1
+ef_05
+  rotate: false
+  xy: 306, 122
+  size: 140, 108
+  orig: 140, 108
+  offset: 0, 0
+  index: -1
+ef_06
+  rotate: false
+  xy: 2, 148
+  size: 302, 302
+  orig: 302, 302
+  offset: 0, 0
+  index: -1
+ef_side
+  rotate: false
+  xy: 2, 2
+  size: 35, 34
+  orig: 35, 34
+  offset: 0, 0
+  index: -1
