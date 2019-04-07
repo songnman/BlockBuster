@@ -33,7 +33,7 @@ public class BlockDefault : MonoBehaviour
 			{
 				// if(gameObject.transform.parent.childCount < 2)
 				// 	Debug.Log("front");
-				
+				if(gameObject.name != "Block02(Clone)")
 				Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
 				Destroy(gameObject);
 			}

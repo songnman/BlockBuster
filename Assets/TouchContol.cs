@@ -103,7 +103,7 @@ public class TouchContol : MonoBehaviour
 					float directionYLimit = 0.25f;
 					if(direction.y > directionYLimit)
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.25f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.21f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 						
 						ballLine.SetPosition(0, shootPos);
@@ -112,7 +112,7 @@ public class TouchContol : MonoBehaviour
 					}
 					else
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.25f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.21f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 
 						ballLine.SetPosition(0, shootPos);
