@@ -10,7 +10,7 @@ public class TouchContol : MonoBehaviour
 {
 	[HideInInspector] public GameObject firstBallObj;
 	[HideInInspector] public int ballCount;
-	[HideInInspector]public Transform shootPos;
+	[HideInInspector]public Vector3 shootPos;
 	public GameObject ballPrefab;
 	public GameObject fakeBallPrefab;
 	public GameObject increaseBallPrefab;
@@ -78,7 +78,7 @@ public class TouchContol : MonoBehaviour
 						break;
 					}
 					fakeBallPrefab.SetActive(true);
-					shootPos = firstBallObj.transform;
+					shootPos = firstBallObj.transform.position;
 					oriTouchPos = touchPosition;
 					ballLine.positionCount = 2;
 					touchLine.positionCount = 2;
@@ -103,19 +103,19 @@ public class TouchContol : MonoBehaviour
 					float directionYLimit = 0.25f;
 					if(direction.y > directionYLimit)
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.25f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.25f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 						
-						ballLine.SetPosition(0, shootPos.position);
+						ballLine.SetPosition(0, shootPos);
 						ballLine.SetPosition(1, hits.point);//(Vector2)shootPos.position + (direction * 20) );
 						shootDirection = direction;
 					}
 					else
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.25f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.25f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 
-						ballLine.SetPosition(0, shootPos.position);
+						ballLine.SetPosition(0, shootPos);
 						// ballLine.SetPosition(1, (Vector2)shootPos.position + new Vector2(Mathf.Sign(direction.x), directionYLimit) * 20 );
 						ballLine.SetPosition(1, hits.point);
 						shootDirection = (new Vector2(Mathf.Sign(direction.x), directionYLimit)).normalized;
@@ -140,13 +140,18 @@ public class TouchContol : MonoBehaviour
 	[HideInInspector]public int stickBallCount = 0;
 	[HideInInspector]public int shootBallCount = 0;
 
-	[HideInInspector] public List<GameObject> ballList;
+	// [HideInInspector] public List<GameObject> ballList;
 	[HideInInspector] public List<GameObject> notFirstBallList;
 	public Text shootBallRemainText;
+	public Text remainBallText;
 	public Button skipButton;
 	public void SkipShootBall()
 	{
-		stickBallCount = shootBallCount;
+		stickBallCount = shootBallCount + 100;
+
+		Debug.Log("shootBallCount " + shootBallCount);
+		Debug.Log("stickBallCount " + stickBallCount);
+
 	}
 	public IEnumerator ShootBall()
 	{
@@ -157,60 +162,69 @@ public class TouchContol : MonoBehaviour
 		shootBallCount = ballCount;
 		int shootBallRemain = ballCount;
 		notFirstBallList = new List<GameObject>();
+		List<GameObject> ballList = new List<GameObject>();
+		
+		float shootInterval = 0.03f;
+		int airBallCount = ballGroup.transform.childCount - 1;
+
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		Destroy(firstBallObj);
 		firstBallObj = null;
-		float shootInterval = 0.03f;
-		ballList = new List<GameObject>();
-		// ballList.Clear();
-		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, ballList[0].transform.position + new Vector3(0,-0.2f), Quaternion.identity);
+		
 		for (int i = 0; i < shootBallCount; i++)
 		{
-			ballList.Add(Instantiate(ballPrefab));
+			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
-			ballList[i].transform.position = shootPos.position;
-		}
-		for (int i = 0; i < ballList.Count; i++)
-		{
-			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
+
+			if (ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
 				skipButton.interactable = true;
 
-			if(stickBallCount >= shootBallCount)
+			if (stickBallCount >= shootBallCount)
 				break;
 
-			ballList[i].GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 /* * BallSpeedFactor*/ );
+			if (notFirstBallList.Count > 25)		//[2019-04-07 18:43:03] 일정량 이상의 볼이 돌아오면 저절로 회수. ( 최적화를 위해서 필요함)
+			{
+				GameObject targetBall = notFirstBallList[notFirstBallList.Count - 25];
+				if (targetBall != null && targetBall.GetComponent<BallDefault>().isBallCollision)
+				{
+					// Debug.Log(targetBall);
+					StartCoroutine("DestroyBalls", targetBall);
+				}
+			}
+
+			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * 700  * BallSpeedFactor );
 
 			yield return new WaitForSeconds(shootInterval);
+
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
-			if(shootBallRemain < 1)
+			if (shootBallRemain < 1)
 			{
 				shootBallRemainText.gameObject.SetActive(false);
 			}
+
+			RemainBallCount();
 		}
-		// if(ballCount > 100)
-		// {
-		// 	Debug.Log("wait Until stickball up 10");
-		// 	yield return new WaitUntil(()=> firstBallObj != null && stickBallCount > 10);
-		// 	skipButton.interactable = true;
-		// }
-		
+		// yield return new WaitUntil(()=> shootBallRemain < 1);
+		// Debug.Log("shootBallCount " + shootBallCount);
 		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
-		
+		// Debug.Log("stickBallCount " + stickBallCount);
+
 		skipButton.interactable = false;
+
 		// Debug.Log("All Balls are Stuck");
 		
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
-		
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
 		{
-			if(item != firstBallObj)
+			if(item != firstBallObj && item != null)
 			{
 				StartCoroutine("DestroyBalls" , item);
 			}
-			// yield return new WaitForFixedUpdate();
 		}
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		yield return new WaitForSeconds(1.167f);
 
 		shootBallRemain = ballCount;
@@ -225,16 +239,24 @@ public class TouchContol : MonoBehaviour
 		bottomWallSc.isBallStickBottom = true;
 		blockManagerSc.CreateBlockLineAndMove();
 	}
+
+	public void RemainBallCount()
+	{
+		remainBallText.text = "Remain Ball " + ballGroup.transform.childCount.ToString("N0");
+	}
+
 	IEnumerator DestroyBalls(GameObject item)
 	{
 		Vector3 oriPos = item.transform.position;
 		for (int i = 0; i < 10; i++)
 		{
-			item.transform.position = Vector3.Lerp(oriPos, firstBallObj.transform.position, i * 0.1f);
+			if(item != null)
+				item.transform.position = Vector3.Lerp(oriPos, firstBallObj.transform.position, i * 0.1f);
 			yield return new WaitForFixedUpdate();
 		}
 		Destroy(item);
-		// Debug.Log("done");
+		yield return null;
+		RemainBallCount();
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {

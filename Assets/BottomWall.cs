@@ -34,6 +34,7 @@ public class BottomWall : MonoBehaviour
 				else
 				{
 					touchContolSc.firstBallObj = other.gameObject;
+					Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, other.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 					// Debug.Log("FirstBall Assigned");
 				}
 			}
