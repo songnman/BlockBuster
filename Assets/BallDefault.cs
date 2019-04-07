@@ -16,10 +16,7 @@ public class BallDefault : MonoBehaviour
 
 		if(other.gameObject.tag == "Block")
 		{
-			GameObject particle;
-			particle = Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, gameObject.transform.position, Quaternion.identity);
-
-			SkeletonAnimation skeleton = particle.GetComponent<SkeletonAnimation>();
+			Instantiate(Resources.Load("Particles/Ember") as GameObject, other.contacts[0].point, Quaternion.identity);
 			isCollisionBlock = true;
 		}
 

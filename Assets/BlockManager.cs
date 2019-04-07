@@ -68,7 +68,7 @@ public class BlockManager : MonoBehaviour
 	}
 	public void CreateBlock02()
 	{
-		GameObject blockObj = Instantiate(block02Prefab, new Vector3(0, 0), Quaternion.Euler(0,0,45) );
+		GameObject blockObj = Instantiate(block02Prefab, new Vector3(0, 0), Quaternion.Euler(0,0,0) );
 		BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 		blockObj.transform.SetParent(gameObject.transform);
 		

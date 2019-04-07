@@ -25,6 +25,7 @@ public class TouchContol : MonoBehaviour
 	
 	void Start()
 	{
+		Application.targetFrameRate = 60;
 		ballLine = transform.GetChild(0).GetComponent<LineRenderer>();
 		touchLine = transform.GetChild(1).GetComponent<LineRenderer>();
 		// ballLine.material.mainTextureScale.Normalize();
@@ -39,9 +40,10 @@ public class TouchContol : MonoBehaviour
 		firstBallObj.transform.SetParent(ballGroup.transform);
 		firstBallObj.transform.position = new Vector2 (0, -3.4f);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , false, 0);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
 		ballCount = 1;
+		bottomWallSc.isBallStickBottom = true;
 	}	
 	Vector3 oriTouchPos;
 	Vector2 direction;
@@ -101,7 +103,7 @@ public class TouchContol : MonoBehaviour
 					float directionYLimit = 0.25f;
 					if(direction.y > directionYLimit)
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.3f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.25f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 						
 						ballLine.SetPosition(0, shootPos.position);
@@ -110,7 +112,7 @@ public class TouchContol : MonoBehaviour
 					}
 					else
 					{
-						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.3f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
+						RaycastHit2D hits = Physics2D.CircleCast(shootPos.position, 0.25f, new Vector2(Mathf.Sign(direction.x), directionYLimit),100,LayerMask.GetMask("Block", "Block02", "Wall"));
 						fakeBallPrefab.transform.position = hits.point;
 
 						ballLine.SetPosition(0, shootPos.position);
@@ -168,7 +170,7 @@ public class TouchContol : MonoBehaviour
 			// ballList[i].transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "loop" , false);
 
 		}
-		
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, ballList[0].transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		for (int i = 0; i < ballList.Count; i++)
 		{
 			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
@@ -178,7 +180,7 @@ public class TouchContol : MonoBehaviour
 				break;
 
 			ballList[i].GetComponent<Rigidbody2D>().AddForce( shootDirection * 700 /* * BallSpeedFactor*/ );
-			
+
 			yield return new WaitForSeconds(shootInterval);
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
@@ -200,7 +202,7 @@ public class TouchContol : MonoBehaviour
 		// Debug.Log("All Balls are Stuck");
 		
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , false, 0);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
 		
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
@@ -234,7 +236,7 @@ public class TouchContol : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 		Destroy(item);
-		Debug.Log("done");
+		// Debug.Log("done");
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {

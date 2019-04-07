@@ -21,8 +21,8 @@ public class BlockDefault : MonoBehaviour
 	{
 		if		(other.gameObject.tag == "Ball")
 		{
-			if(gameObject.name != "Block02(Clone)")
-				Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
+			// if(gameObject.name != "Block02(Clone)")
+			// 	Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
 
 			// Debug.Log("Ball Collision!");
 			if(gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
@@ -31,8 +31,10 @@ public class BlockDefault : MonoBehaviour
 			leftCountText.text = leftCount.ToString("N0");
 			if(leftCount < 1)
 			{
-				if(gameObject.transform.parent.childCount < 2)
-					Debug.Log("front");
+				// if(gameObject.transform.parent.childCount < 2)
+				// 	Debug.Log("front");
+				
+				Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
 				Destroy(gameObject);
 			}
 		}

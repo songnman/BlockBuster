@@ -168,8 +168,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
-      minScalar: 10
+      scalar: 30
+      minScalar: 20
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.05
-      minScalar: 0.025
+      scalar: 0.3
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -600,7 +600,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 100
+    maxNumParticles: 5
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -975,7 +975,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 20
+        scalar: 5
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -2570,13 +2570,13 @@ ParticleSystem:
     separateAxis: 0
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
-    multiplyDragByParticleVelocity: 1
+    multiplyDragByParticleVelocity: 0
     dampen: 0.5
     drag:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 100
-      minScalar: 0
+      minMaxState: 3
+      scalar: 150
+      minScalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4712,7 +4712,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ded2a8ffa70daca46a85162a451d5e19, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

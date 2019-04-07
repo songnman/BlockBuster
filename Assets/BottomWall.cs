@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class BottomWall : MonoBehaviour
 {
 	// Start is called before the first frame update
-	public bool isBallStickBottom = true;
+	public bool isBallStickBottom = false;
 	public TouchContol touchContolSc;
 	void Start()
 	{
@@ -24,7 +24,7 @@ public class BottomWall : MonoBehaviour
 				if(!other.gameObject.GetComponent<BallDefault>().isCollisionBlock)
 				{
 					touchContolSc.collisionBlockFailCount++;
-					Debug.Log(touchContolSc.collisionBlockFailCount);
+					// Debug.Log(touchContolSc.collisionBlockFailCount);
 				}
 
 				if(touchContolSc.firstBallObj != null)

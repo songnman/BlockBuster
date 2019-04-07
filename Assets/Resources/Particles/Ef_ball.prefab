@@ -126,4 +126,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa886785c0d1cc40964cfc7859dd655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepEventName: footstep
