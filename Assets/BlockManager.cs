@@ -95,11 +95,11 @@ public class BlockManager : MonoBehaviour
 
 		while(blockCount < 1 || !isBonusBallExist) //[2019-03-09 17:05:30] 블럭이 최소 1개 이상일때까지 계속.
 		{
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				if (RandomNum && blockCount < MaxBlockCount && !blockLine.Contains(i))
 				{
-					GameObject blockObj = Instantiate(blockPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
+					GameObject blockObj = Instantiate(blockPrefab, new Vector3(i - 2.5f, 3.0f), Quaternion.identity);
 					BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 					blockObj.transform.SetParent(gameObject.transform);
 	
@@ -112,7 +112,7 @@ public class BlockManager : MonoBehaviour
 				else if(RandomNum && !isBonusBallExist && !blockLine.Contains(i))
 				{
 					isBonusBallExist = true;
-					GameObject bonusBallObj = Instantiate(bonusBallPrefab, new Vector3(i - 3, 3.0f), Quaternion.identity);
+					GameObject bonusBallObj = Instantiate(bonusBallPrefab, new Vector3(i - 2.5f, 3.0f), Quaternion.identity);
 					// BonusBall bonusBallSc = bonusBallObj.GetComponent<BonusBall>();
 					bonusBallObj.transform.SetParent(gameObject.transform);
 					blockLine.Add(i);

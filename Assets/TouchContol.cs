@@ -162,15 +162,13 @@ public class TouchContol : MonoBehaviour
 		float shootInterval = 0.03f;
 		ballList = new List<GameObject>();
 		// ballList.Clear();
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, ballList[0].transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		for (int i = 0; i < shootBallCount; i++)
 		{
 			ballList.Add(Instantiate(ballPrefab));
 			ballList[i].transform.SetParent(ballGroup.transform);
 			ballList[i].transform.position = shootPos.position;
-			// ballList[i].transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "loop" , false);
-
 		}
-		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, ballList[0].transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		for (int i = 0; i < ballList.Count; i++)
 		{
 			if(ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
@@ -218,7 +216,7 @@ public class TouchContol : MonoBehaviour
 		shootBallRemain = ballCount;
 		shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
 		shootBallRemainText.gameObject.SetActive(true);
-		shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -1);
+		shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -0.5f);
 
 		collisionBlockFailCount = 0;
 		stickBallCount = 0;
