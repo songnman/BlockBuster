@@ -134,6 +134,8 @@ public class BlockManager : MonoBehaviour
 
 	public void CreateBlockLineAndMove()
 	{
+		
+		
 		bool isBonusBallExist = false;
 		int blockCount = 0;
 		List<int> blockLine = new List<int>();

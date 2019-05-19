@@ -14,7 +14,7 @@ public class BallDefault : MonoBehaviour
 	void Start() 
 	{
 		touchControlSc = GameObject.Find("TouchArea").GetComponent<TouchContol>();
-		soundManagerSc = GameObject.Find("Main").GetComponent<SoundManager>();
+		// soundManagerSc = GameObject.Find("Main").GetComponent<SoundManager>();
 		GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
 	}
 	private void OnCollisionEnter2D(Collision2D other) 
@@ -38,8 +38,8 @@ public class BallDefault : MonoBehaviour
 			touchControlSc.hitBallCount++;
 			Instantiate(Resources.Load("Particles/Ember") as GameObject, other.contacts[0].point, Quaternion.identity);
 			isCollisionBlock = true;
-			if(touchControlSc.hitBallCount > 0 && touchControlSc.hitBallCount < 7)
-				soundManagerSc.SoundQueue(touchControlSc.hitBallCount);
+			// if(touchControlSc.hitBallCount > 0 && touchControlSc.hitBallCount < 7)
+			// 	soundManagerSc.SoundQueue(touchControlSc.hitBallCount);
 
 		}
 

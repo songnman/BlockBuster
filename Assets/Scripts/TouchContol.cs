@@ -247,6 +247,11 @@ public class TouchContol : MonoBehaviour
 		bottomWallSc.isBallStickBottom = true;
 		soundManagerSc.SoundReset();
 		blockManagerSc.CreateBlockLineAndMove();
+		for (int i = 0; i < blockManagerSc.gameObject.transform.childCount; i++)
+		{
+			if(blockManagerSc.transform.GetChild(i).gameObject.tag == "Block")
+				blockManagerSc.transform.GetChild(i).gameObject.GetComponent<BlockDefault>().isBallCollision = false;
+		}
 	}
 
 	public void RemainBallCount()

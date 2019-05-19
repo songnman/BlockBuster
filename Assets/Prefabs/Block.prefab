@@ -303,7 +303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6574236819396182875}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c71eacf4500927648b382c37e13535d5, type: 3}
   m_Name: 
@@ -311,6 +311,7 @@ MonoBehaviour:
   leftCount: 3
   leftCountText: {fileID: 0}
   particle: {fileID: 0}
+  soundManagerSc: {fileID: 0}
 --- !u!50 &9139799441783095701
 Rigidbody2D:
   serializedVersion: 4

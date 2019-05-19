@@ -20,17 +20,22 @@ public class SoundManager : MonoBehaviour
 				bgmSourceList[i].mute = true;
 		}
 	}
-	public void SoundQueue(int hitBallCount)
+	public int hitBallCount	= 0;
+	public void SoundQueueUp()
 	{
+		if(hitBallCount < 7)
+			hitBallCount++;
+		Debug.Log(hitBallCount);
 		int length = hitBallCount;
-		for (int i = 0; i < length + 1; i++)
+		for (int i = 0; i < length; i++)
 		{
 			bgmSourceList[i].mute = false;
-			Debug.Log(hitBallCount);
+			
 		}
 	}	
 	public void SoundReset()
 	{
+		hitBallCount = 0;
 		int length = 7;
 		for (int i = 0; i < length; i++)
 		{
