@@ -48,16 +48,19 @@ public class TouchContol : MonoBehaviour
 	Vector3 oriTouchPos;
 	Vector2 direction;
 	Vector2 shootDirection;
-	float BallSpeedFactor
+	public int hitBallCount = 0;
+	public float ballSpeedFactor = 0;
+	public float BallSpeedFactor
 	{
 		get
 		{
-			if		(ballCount > 100)
-				return 1.5f;
-			else if	(ballCount > 200)
-				return 2.0f;
-			else
-				return 1.0f;
+			float factor = 1 + hitBallCount * 0.03f;
+
+			if(factor > 4.0f)
+				factor = 4.0f;
+
+			speedFactorText.text = "Speed Factor " + factor.ToString("N1");
+			return factor;
 		}
 	}
 	bool isSwipeEnable = false;
@@ -139,11 +142,11 @@ public class TouchContol : MonoBehaviour
 	}
 	[HideInInspector]public int stickBallCount = 0;
 	[HideInInspector]public int shootBallCount = 0;
-
 	// [HideInInspector] public List<GameObject> ballList;
 	[HideInInspector] public List<GameObject> notFirstBallList;
 	public Text shootBallRemainText;
 	public Text remainBallText;
+	public Text speedFactorText;
 	public Button skipButton;
 	public void SkipShootBall()
 	{
@@ -164,7 +167,7 @@ public class TouchContol : MonoBehaviour
 		notFirstBallList = new List<GameObject>();
 		List<GameObject> ballList = new List<GameObject>();
 		
-		float shootInterval = 0.03f;
+		float shootInterval = 0.24f;
 		int airBallCount = ballGroup.transform.childCount - 1;
 
 		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
@@ -192,9 +195,9 @@ public class TouchContol : MonoBehaviour
 				}
 			}
 
-			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * 700  * BallSpeedFactor );
+			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * (500 /*+ 400 * BallSpeedFactor * 0.1f*/) );
 
-			yield return new WaitForSeconds(shootInterval);
+			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor) );
 
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
@@ -208,6 +211,8 @@ public class TouchContol : MonoBehaviour
 		// yield return new WaitUntil(()=> shootBallRemain < 1);
 		// Debug.Log("shootBallCount " + shootBallCount);
 		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		hitBallCount = 0;
+		BallSpeedFactor.ToString();
 		// Debug.Log("stickBallCount " + stickBallCount);
 
 		skipButton.interactable = false;

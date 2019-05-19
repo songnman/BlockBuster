@@ -44,6 +44,5 @@ public class BlockDefault : MonoBehaviour
 			gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
 			// Debug.Log("Block Collision!");
 		}
-
 	}
 }
