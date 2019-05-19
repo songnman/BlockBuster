@@ -56,8 +56,8 @@ public class TouchContol : MonoBehaviour
 	{
 		get
 		{
-			float factor = 1 + hitBallCount * 0.03f;
-			// float factor = 3;
+			// float factor = 1 + hitBallCount * 0.03f;
+			float factor = 3;
 
 			if(factor > 4.0f)
 				factor = 4.0f;

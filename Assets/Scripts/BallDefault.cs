@@ -24,9 +24,9 @@ public class BallDefault : MonoBehaviour
 		{
 			isBallCollision = true;
 
-			Vector2 velo = GetComponent<Rigidbody2D>().velocity;
-			if( Mathf.Abs(velo.x) < 15 && Mathf.Abs(velo.y) < 15 )
-				GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
+			// Vector2 velo = GetComponent<Rigidbody2D>().velocity;
+			// if( Mathf.Abs(velo.x) < 15 && Mathf.Abs(velo.y) < 15 )
+			// 	GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
 
 			// Debug.Log(GetComponent<Rigidbody2D>().velocity);
 

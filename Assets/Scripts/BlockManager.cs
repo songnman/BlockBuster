@@ -9,7 +9,7 @@ public class BlockManager : MonoBehaviour
 {
 	float randomNumFloat = 0.3f;
 	float RandomNumFloat
-	{
+	{						//[2019-05-19 18:17:09] 공 갯수에 따라서 기본블럭 생성확률 상승.
 		get
 		{
 			if		(shootCount + 1 < 50)
@@ -30,7 +30,7 @@ public class BlockManager : MonoBehaviour
 	}
 	// float randomRatio = 0.3f;
 	bool RandomNum02
-	{
+	{						//[2019-05-19 18:18:09] 공 50개 이상부터 일정확률로 다이아블럭 생길확률 상승
 		get
 		{
 			float randomRatio = 0;
