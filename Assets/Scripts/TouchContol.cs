@@ -18,6 +18,8 @@ public class TouchContol : MonoBehaviour
 	public BottomWall bottomWallSc;
 	public GameObject dotLineObj;
 	public BlockManager blockManagerSc;
+	public SoundManager soundManagerSc;
+
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
 	public bool isButtonDown = false;
@@ -55,6 +57,7 @@ public class TouchContol : MonoBehaviour
 		get
 		{
 			float factor = 1 + hitBallCount * 0.03f;
+			// float factor = 3;
 
 			if(factor > 4.0f)
 				factor = 4.0f;
@@ -242,6 +245,7 @@ public class TouchContol : MonoBehaviour
 		shootBallCount = 0;
 		// Debug.Log(stickBallCount);
 		bottomWallSc.isBallStickBottom = true;
+		soundManagerSc.SoundReset();
 		blockManagerSc.CreateBlockLineAndMove();
 	}
 

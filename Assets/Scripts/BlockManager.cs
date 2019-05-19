@@ -194,8 +194,14 @@ public class BlockManager : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 		if (gameObject.transform.GetChild(i).transform.position.y < -2.5f)
-			SceneManager.LoadScene("MainScene");
-	}	
+			ResetGame();
+	}
+
+	public void ResetGame()
+	{
+		SceneManager.LoadScene("MainScene");
+	}
+
 	IEnumerator IncBlockScale(object[] parms)
 	{
 		
