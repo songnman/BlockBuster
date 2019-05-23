@@ -20,11 +20,19 @@ public class BlockDefault : MonoBehaviour
 	}
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		if		(other.gameObject.tag == "Ball")
+		if (other.gameObject.tag == "Ball")
 		{
 			if(isBallCollision == false && soundManagerSc.hitBallCount < 7)
+			{
+				isBallCollision = true;
 				soundManagerSc.SoundQueueUp();
-			isBallCollision = true;
+			}
+			
+
+			soundManagerSc.PlayHit();
+			// soundManagerSc.StartCoroutine("PlayHit");
+
+
 			// if(gameObject.name != "Block02(Clone)")
 			// 	Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
 
@@ -38,7 +46,7 @@ public class BlockDefault : MonoBehaviour
 				// if(gameObject.transform.parent.childCount < 2)
 				// 	Debug.Log("front");
 				if(gameObject.name != "Block02(Clone)")
-				Instantiate(Resources.Load("Particles/Ef_block"), gameObject.transform.position, Quaternion.identity);
+				Instantiate(Resources.Load("Particles/Ef_block") as GameObject, gameObject.transform.position, Quaternion.identity);
 				Destroy(gameObject);
 			}
 		}

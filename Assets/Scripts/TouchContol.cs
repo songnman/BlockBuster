@@ -89,6 +89,7 @@ public class TouchContol : MonoBehaviour
 					ballLine.positionCount = 2;
 					touchLine.positionCount = 2;
 					isSwipeEnable = true;
+					soundManagerSc.SoundReset();
 				break;
 
 				case TouchPhase.Moved:
@@ -179,6 +180,7 @@ public class TouchContol : MonoBehaviour
 		
 		for (int i = 0; i < shootBallCount; i++)
 		{
+			soundManagerSc.PlayShoot();
 			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
 
@@ -222,6 +224,7 @@ public class TouchContol : MonoBehaviour
 
 		// Debug.Log("All Balls are Stuck");
 		
+		//? 볼 모으기////////////////////////////
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
@@ -232,6 +235,7 @@ public class TouchContol : MonoBehaviour
 				StartCoroutine("DestroyBalls" , item);
 			}
 		}
+
 		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		yield return new WaitForSeconds(1.167f);
 
@@ -245,7 +249,6 @@ public class TouchContol : MonoBehaviour
 		shootBallCount = 0;
 		// Debug.Log(stickBallCount);
 		bottomWallSc.isBallStickBottom = true;
-		soundManagerSc.SoundReset();
 		blockManagerSc.CreateBlockLineAndMove();
 		for (int i = 0; i < blockManagerSc.gameObject.transform.childCount; i++)
 		{
