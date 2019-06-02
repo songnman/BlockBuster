@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1028812029201110730}
   - component: {fileID: 4879197492244734932}
   m_Layer: 9
-  m_Name: Ball_01
+  m_Name: Ball_3
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8e1fcedf65891d49b3a4e6b8d1a027c, type: 2}
+  - {fileID: 2100000, guid: f18beb74c34703f4aac5a7143123628a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 1ebd6419289f92245be88c61f6dfca2b, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 2f8a80f25a78a2643b4bc8eeb0615018, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0

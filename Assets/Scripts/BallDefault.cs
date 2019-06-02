@@ -13,9 +13,13 @@ public class BallDefault : MonoBehaviour
 
 	void Start() 
 	{
-		touchControlSc = GameObject.Find("TouchArea").GetComponent<TouchContol>();
+		if(GameObject.Find("TouchArea") != null)
+		{
+			touchControlSc = GameObject.Find("TouchArea").GetComponent<TouchContol>();
+			GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
+		}
+
 		// soundManagerSc = GameObject.Find("Main").GetComponent<SoundManager>();
-		GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
 	}
 	private void OnCollisionEnter2D(Collision2D other) 
 	{

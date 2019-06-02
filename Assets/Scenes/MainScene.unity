@@ -1552,7 +1552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.22}
   m_AnchorMax: {x: 1, y: 0.78}
-  m_AnchoredPosition: {x: 0, y: -37.999985}
+  m_AnchoredPosition: {x: 0, y: -37.999977}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &288517798
@@ -2163,7 +2163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -173.49997}
+  m_AnchoredPosition: {x: 0, y: -173.49998}
   m_SizeDelta: {x: 0, y: -453}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &462179315
@@ -9108,7 +9108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 98.6155}
+  m_AnchoredPosition: {x: 0, y: 98.61549}
   m_SizeDelta: {x: 0, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1623998834
@@ -9373,7 +9373,7 @@ MonoBehaviour:
   firstBallObj: {fileID: 0}
   ballCount: 3
   shootPos: {x: 0, y: 0, z: 0}
-  ballPrefab: {fileID: 1028812029201110732, guid: 200e0597d48a21b4a9936f90c93bfaa5,
+  ballPrefab: {fileID: 1028812029201110732, guid: 24c220b43261a0b449a44f3653440b56,
     type: 3}
   fakeBallPrefab: {fileID: 955920837}
   increaseBallPrefab: {fileID: 695953660812440118, guid: 5cfc5cdb66a37ed42bc25a9bc9a64281,

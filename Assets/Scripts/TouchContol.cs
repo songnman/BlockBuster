@@ -33,10 +33,8 @@ public class TouchContol : MonoBehaviour
 		// ballLine.material.mainTextureScale.Normalize();
 		fakeBallPrefab.SetActive(false);
 		skipButton.interactable = false;
-
-
 		
-		// firstBallObj = ballGroup.transform.GetChild(0).gameObject;
+		ballPrefab = Resources.Load<GameObject>("Prefabs/Balls/Ball_" + MenuManager.skinNum);
 		
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
