@@ -201,7 +201,7 @@ public class BlockManager : MonoBehaviour
 
 	public void ResetGame()
 	{
-		SceneManager.LoadScene("MainScene");
+		SceneManager.LoadScene("App_Scene");
 	}
 
 	IEnumerator IncBlockScale(object[] parms)
