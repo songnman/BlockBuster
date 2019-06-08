@@ -40,6 +40,7 @@ public class TouchContol : MonoBehaviour
 		
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
+		firstBallObj.GetComponent<BallDefault>().touchControlSc = this;
 		firstBallObj.transform.position = new Vector2 (0, -3.4f);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
@@ -169,29 +170,31 @@ public class TouchContol : MonoBehaviour
 	public IEnumerator ShootBall()
 	{
 		bottomWallSc.isBallStickBottom = false;
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_on" , false);
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "loop" , false, 0);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation(0, "Ball_on", false);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation(0, "loop", false, 0);
 		yield return new WaitForSeconds(0.4f);
 		shootBallCount = ballCount;
 		int shootBallRemain = ballCount;
 		notFirstBallList = new List<GameObject>();
 		List<GameObject> ballList = new List<GameObject>();
-		
+
 		float shootInterval = 0.24f;
 		int airBallCount = ballGroup.transform.childCount - 1;
 
-		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0, -0.2f), Quaternion.identity);
 		Destroy(firstBallObj);
 		firstBallObj = null;
-		
+
 		for (int i = 0; i < shootBallCount; i++)
 		{
 			soundManagerSc.PlayShoot();
 			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
-			
-			if(isBigBallActivate)
-				ballList[i].transform.localScale = new Vector3(0.6f,0.6f,1);
+			ballList[i].GetComponent<BallDefault>().touchControlSc = this;
+
+
+			if (isBigBallActivate)
+				ballList[i].transform.localScale = new Vector3(0.6f, 0.6f, 1);
 
 			if (ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
 				skipButton.interactable = true;
@@ -199,7 +202,7 @@ public class TouchContol : MonoBehaviour
 			if (stickBallCount >= shootBallCount)
 				break;
 
-			if (notFirstBallList.Count > 25)		//[2019-04-07 18:43:03] 일정량 이상의 볼이 돌아오면 저절로 회수. ( 최적화를 위해서 필요함)
+			if (notFirstBallList.Count > 25)        //[2019-04-07 18:43:03] 일정량 이상의 볼이 돌아오면 저절로 회수. ( 최적화를 위해서 필요함)
 			{
 				GameObject targetBall = notFirstBallList[notFirstBallList.Count - 25];
 				if (targetBall != null && targetBall.GetComponent<BallDefault>().isBallCollision)
@@ -209,9 +212,9 @@ public class TouchContol : MonoBehaviour
 				}
 			}
 
-			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * (500 /*+ 400 * BallSpeedFactor * 0.1f*/) );
+			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * (500 /*+ 400 * BallSpeedFactor * 0.1f*/));
 
-			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor) );
+			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor));
 
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
@@ -224,7 +227,7 @@ public class TouchContol : MonoBehaviour
 		}
 		// yield return new WaitUntil(()=> shootBallRemain < 1);
 		// Debug.Log("shootBallCount " + shootBallCount);
-		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		yield return new WaitUntil(() => firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
 		// Debug.Log("stickBallCount " + stickBallCount);
@@ -232,25 +235,27 @@ public class TouchContol : MonoBehaviour
 		skipButton.interactable = false;
 
 		// Debug.Log("All Balls are Stuck");
-		
+
 		//? 볼 모으기////////////////////////////
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
-		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation(0, "Ball_off", false);
+		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation(0, "Idle", true, 0);
 
 
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
 		{
-			if(item != firstBallObj && item != null)
+			if (item != firstBallObj && item != null)
 			{
-				StartCoroutine("DestroyBalls" , item);
+				StartCoroutine("DestroyBalls", item);
 			}
 		}
 
-		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
+		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0, -0.2f), Quaternion.identity);
 		yield return new WaitForSeconds(1.167f);
+
+		// shootBallRemain = ballCount;
 		
-		shootBallRemain = ballCount;
-		shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
+		BallCountUpdate();
+		
 		shootBallRemainText.gameObject.SetActive(true);
 		shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -0.5f);
 
@@ -259,23 +264,26 @@ public class TouchContol : MonoBehaviour
 		shootBallCount = 0;
 		// Debug.Log(stickBallCount);
 		bottomWallSc.isBallStickBottom = true;
-		
-		if(isPierceActivate)
+
+		for (int i = 0; i < blockManagerSc.gameObject.transform.childCount; i++)
+			if (blockManagerSc.transform.GetChild(i).gameObject.tag != "BonusBall")
+				blockManagerSc.transform.GetChild(i).gameObject.GetComponent<BlockDefault>().isBallCollision = false;
+
+		if (isPierceActivate)
 		{
-			blockManagerSc.RigidBodySwitch(true);
-			isPierceActivate = false;
+			PierceDeActivate();
 		}
-		if(isReaimActivate)
+		if (isReaimActivate)
 		{
 			isReaimActivate = false;
 		}
-		if(isBigBallActivate)
+		if (isBigBallActivate)
 		{
-			firstBallObj.transform.localScale = new Vector3(0.3f,0.3f,1);	//[2019-06-08 12:11:16] 공을 원래크기로 복귀
-			firstBallObj.transform.position = new Vector2 (firstBallObj.transform.position.x, -3.4f);
+			firstBallObj.transform.localScale = new Vector3(0.3f, 0.3f, 1); //[2019-06-08 12:11:16] 공을 원래크기로 복귀
+			firstBallObj.transform.position = new Vector2(firstBallObj.transform.position.x, -3.4f);
 			isBigBallActivate = false;
 		}
-		if(!isDoubleActivate)
+		if (!isDoubleActivate)
 		{
 			blockManagerSc.CreateBlockLineAndMove();
 		}
@@ -283,12 +291,17 @@ public class TouchContol : MonoBehaviour
 		{
 			isDoubleActivate = false;
 		}
-		
-		for (int i = 0; i < blockManagerSc.gameObject.transform.childCount; i++)
-		{
-			if(blockManagerSc.transform.GetChild(i).gameObject.tag == "Block")
-				blockManagerSc.transform.GetChild(i).gameObject.GetComponent<BlockDefault>().isBallCollision = false;
-		}
+	}
+
+	public void BallCountUpdate()
+	{
+		shootBallRemainText.text = "x" + ballCount.ToString("N0");
+	}
+
+	public void PierceDeActivate()
+	{
+		blockManagerSc.RigidBodySwitch(true);
+		isPierceActivate = false;
 	}
 
 	public void RemainBallCount()

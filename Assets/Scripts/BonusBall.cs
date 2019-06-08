@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class BonusBall : MonoBehaviour
 {
-	TouchContol touchContolSc;
-	SoundManager soundManagerSc;
-	void Start() 
-	{
-		touchContolSc = GameObject.Find("TouchArea").GetComponent<TouchContol>();
-		soundManagerSc = GameObject.Find("Main").GetComponent<SoundManager>();
-	}
+	public TouchContol touchContolSc;
+	public SoundManager soundManagerSc;
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.tag == "Bottom" || other.gameObject.tag == "Ball")
+		if(other.gameObject.tag == "Ball")
 			Destroy(gameObject);
 		touchContolSc.ballCount++;
 		soundManagerSc.PlayShoot();

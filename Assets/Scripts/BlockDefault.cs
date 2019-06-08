@@ -9,15 +9,7 @@ public class BlockDefault : MonoBehaviour
 	public Text leftCountText;
 	public GameObject particle;
 	public bool isBallCollision = false;
-	SoundManager soundManagerSc;
-
-	void Start()
-	{
-		soundManagerSc = GameObject.Find("Main").GetComponent<SoundManager>();
-
-		leftCountText = gameObject.transform.GetChild(0).GetChild(0).GetComponent<Text>();
-		leftCountText.text = leftCount.ToString("N0");
-	}
+	public SoundManager soundManagerSc;
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "Ball")

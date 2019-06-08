@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3989768674828249050}
   - component: {fileID: 1625598061106856600}
   - component: {fileID: 2324010082066766270}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spine GameObject (001)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 1855476312117129955}
   - component: {fileID: 74657518525241311}
   - component: {fileID: 4399966907048095732}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BonusBall
   m_TagString: BonusBall
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5859527537327806545}
   - component: {fileID: 2778523429908227989}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: New Sprite Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 6036452823871595116}
   - component: {fileID: 5401193448534866369}
   - component: {fileID: 7088904229619880116}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4990,7 +4990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 393786076514864062}
   - component: {fileID: 9192737886534146766}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5070,7 +5070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6869996828150194235}
   - component: {fileID: 2998493247006393558}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Block_01_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}

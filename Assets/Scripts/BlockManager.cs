@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
 
 public class BlockManager : MonoBehaviour
 {
@@ -131,11 +129,8 @@ public class BlockManager : MonoBehaviour
 	{
 		CreateBlockLineAndMove();
 	}
-
 	public void CreateBlockLineAndMove()
 	{
-		
-		
 		bool isBonusBallExist = false;
 		int blockCount = 0;
 		List<int> blockLine = new List<int>();
@@ -149,6 +144,7 @@ public class BlockManager : MonoBehaviour
 					GameObject blockObj = Instantiate(blockPrefab, new Vector3(i - 2.5f, 3.75f), Quaternion.identity);
 					BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 					blockObj.transform.SetParent(gameObject.transform);
+					blockObj.GetComponent<BlockDefault>().soundManagerSc = soundManagerSc;
 
 					object[] parms = new object[3]{ blockObj,1.0f , 0.75f};
 					StartCoroutine("IncBlockScale", parms);
@@ -164,6 +160,8 @@ public class BlockManager : MonoBehaviour
 					isBonusBallExist = true;
 					GameObject bonusBallObj = Instantiate(bonusBallPrefab, new Vector3(i - 2.5f, 3.75f), Quaternion.identity);
 					bonusBallObj.transform.SetParent(gameObject.transform);
+					bonusBallObj.GetComponent<BonusBall>().soundManagerSc = soundManagerSc;
+					bonusBallObj.GetComponent<BonusBall>().touchContolSc = touchContolSc;
 					
 					object[] parms = new object[3]{ bonusBallObj, 1.0f, 1.0f};
 					StartCoroutine("IncBlockScale", parms);
@@ -186,7 +184,8 @@ public class BlockManager : MonoBehaviour
 		shootCount++;
 		shootCountText.text = shootCount.ToString("N0");
 	}
-
+	public TouchContol touchContolSc;
+	public SoundManager soundManagerSc;
 	IEnumerator MoveBlock(int i)
 	{
 		Vector3 oriPos = gameObject.transform.GetChild(i).transform.position;
@@ -195,9 +194,21 @@ public class BlockManager : MonoBehaviour
 			gameObject.transform.GetChild(i).transform.position = Vector3.Lerp(oriPos, oriPos + new Vector3(0, -0.75f), j * 0.1f);
 			yield return new WaitForFixedUpdate();
 		}
-		if (gameObject.transform.GetChild(i).transform.position.y < -2.5f)
-			ResetGame();
+		if(transform.GetChild(i).transform.position.y < -2.5f)
+			if(transform.GetChild(i).gameObject.tag == "BonusBall")
+			{
+				touchContolSc.ballCount++;
+				touchContolSc.BallCountUpdate();
+				Destroy(transform.GetChild(i).gameObject);
+			}
+			else
+				ResetGame();
 	}
+	public void ResetGame()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
+	}
+
 	public IEnumerator MoveUpBlock (int i)
 	{
 		Vector3 oriPos = gameObject.transform.GetChild(i).transform.position;
@@ -216,15 +227,8 @@ public class BlockManager : MonoBehaviour
 		{
 			if(gameObject.transform.GetChild(i).tag == "Block")
 				gameObject.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = bl;
-				
 		}
 	}
-
-	public void ResetGame()
-	{
-		SceneManager.LoadScene("App_Scene");
-	}
-
 	IEnumerator IncBlockScale(object[] parms)
 	{
 		
