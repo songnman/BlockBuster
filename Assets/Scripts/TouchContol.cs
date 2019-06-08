@@ -25,7 +25,33 @@ public class TouchContol : MonoBehaviour
 	private LineRenderer touchLine;
 	public bool isButtonDown = false;
 	public int collisionBlockFailCount = 0;
-	
+
+	void Awake() 
+	{
+		gStartCountText.transform.parent.gameObject.SetActive(true);
+		StartCoroutine("StartCountDown");
+	}
+	public Text gStartCountText;
+	IEnumerator StartCountDown()
+	{
+		int iStartCount = 3;
+		for (int i = 0; i < iStartCount; i++)
+		{
+			gStartCountText.text = (iStartCount - i).ToString("N0");
+			// Instantiate(Resources.Load("Particles/Ember02") as GameObject,gStartCountText.transform.position, Quaternion.identity).transform.SetParent(particlePrefab.transform);
+
+			yield return new WaitForSeconds(1f);
+		}
+		isGameStart = true;
+		for (int i = 0; i < 51; i++)
+		{
+			gStartCountText.color = Color.Lerp(new Color (1,1,1,1), new Color (1,1,1,0), i * 0.02f);
+			gStartCountText.transform.parent.GetComponent<Image>().color = Color.Lerp(new Color (0,0,0,0.7f), new Color (0,0,0,0), i * 0.02f);
+			yield return new WaitForFixedUpdate();
+		}
+		Destroy(gStartCountText.transform.parent.gameObject);
+		blockManagerSc.CreateBlockLineAndMove();
+	}
 	void Start()
 	{
 		Application.targetFrameRate = 60;
@@ -70,9 +96,10 @@ public class TouchContol : MonoBehaviour
 	}
 	bool isSwipeEnable = false;
 	public GameObject ReaimAreaPrefab;
+	public bool isGameStart = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
-		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver )
+		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver && isGameStart)
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			touchPosition.z = 0f;

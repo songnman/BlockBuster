@@ -127,10 +127,10 @@ public class BlockManager : MonoBehaviour
 		// }
 
 	}
-	void Start()
-	{
-		CreateBlockLineAndMove();
-	}
+	// void Start()
+	// {
+	// 	CreateBlockLineAndMove();
+	// }
 	public void CreateBlockLineAndMove()
 	{
 		bool isBonusBallExist = false;
