@@ -25,7 +25,8 @@ public class BallDefault : MonoBehaviour
 		if(other.gameObject.tag == "Block")
 		{
 			touchControlSc.hitBallCount++;
-			Instantiate(Resources.Load("Particles/Ember") as GameObject, other.contacts[0].point, Quaternion.identity);
+			Instantiate(Resources.Load("Particles/Ember") as GameObject, other.contacts[0].point, Quaternion.identity).transform.SetParent(touchControlSc.particlePrefab.transform);
+			
 			isCollisionBlock = true;
 		}
 	}

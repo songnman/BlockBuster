@@ -16,7 +16,8 @@ public class TouchContol : MonoBehaviour
 	public GameObject increaseBallPrefab;
 	public GameObject ballGroup;
 	public BottomWall bottomWallSc;
-	public GameObject dotLineObj;
+	// public GameObject dotLineObj;
+	public GameObject particlePrefab;
 	public BlockManager blockManagerSc;
 	public SoundManager soundManagerSc;
 
@@ -184,10 +185,15 @@ public class TouchContol : MonoBehaviour
 		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0, -0.2f), Quaternion.identity);
 		Destroy(firstBallObj);
 		firstBallObj = null;
-
+		bool shootOnce = false;
 		for (int i = 0; i < shootBallCount; i++)
 		{
-			soundManagerSc.PlayShoot();
+			if(!shootOnce)
+			{
+				soundManagerSc.PlayShoot();
+				shootOnce = true;
+			}
+			
 			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
 			ballList[i].GetComponent<BallDefault>().touchControlSc = this;

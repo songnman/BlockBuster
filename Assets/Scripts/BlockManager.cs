@@ -110,6 +110,8 @@ public class BlockManager : MonoBehaviour
 		GameObject blockObj = Instantiate(block02Prefab, new Vector3(0, 0), Quaternion.Euler(0,0,45) );
 		BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 		blockObj.transform.SetParent(gameObject.transform);
+		blockObj.GetComponent<BlockDefault>().soundManagerSc = soundManagerSc;
+
 		
 		object[] parms = new object[3]{ blockObj, 1.0f, 1.0f};
 		StartCoroutine("IncBlockScale", parms);
