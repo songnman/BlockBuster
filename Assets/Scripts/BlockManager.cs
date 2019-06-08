@@ -198,6 +198,27 @@ public class BlockManager : MonoBehaviour
 		if (gameObject.transform.GetChild(i).transform.position.y < -2.5f)
 			ResetGame();
 	}
+	public IEnumerator MoveUpBlock (int i)
+	{
+		Vector3 oriPos = gameObject.transform.GetChild(i).transform.position;
+		for (int j = 0; j < 10 + 1; j++)
+		{
+			gameObject.transform.GetChild(i).transform.position = Vector3.Lerp(oriPos, oriPos + new Vector3(0, 0.75f), j * 0.1f);
+			yield return new WaitForFixedUpdate();
+		}
+		if (gameObject.transform.GetChild(i).transform.position.y > 3.5f)
+			Destroy(gameObject.transform.GetChild(i).gameObject);
+	}	
+	public void RigidBodyOff()
+	{
+		int childCount = gameObject.transform.childCount;
+		for (int i = 0; i < childCount; i++)
+		{
+			if(gameObject.transform.GetChild(i).tag == "Block")
+				gameObject.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
+				
+		}
+	}
 
 	public void ResetGame()
 	{

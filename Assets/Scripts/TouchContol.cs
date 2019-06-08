@@ -34,6 +34,8 @@ public class TouchContol : MonoBehaviour
 		fakeBallPrefab.SetActive(false);
 		skipButton.interactable = false;
 		
+		if(MenuManager.skinNum == 0)
+			MenuManager.skinNum = 1;
 		ballPrefab = Resources.Load<GameObject>("Prefabs/Balls/Ball_" + MenuManager.skinNum);
 		
 		firstBallObj = Instantiate(ballPrefab);
@@ -65,6 +67,7 @@ public class TouchContol : MonoBehaviour
 		}
 	}
 	bool isSwipeEnable = false;
+	public bool isPierceActivate = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
 		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom )
@@ -214,6 +217,7 @@ public class TouchContol : MonoBehaviour
 		// yield return new WaitUntil(()=> shootBallRemain < 1);
 		// Debug.Log("shootBallCount " + shootBallCount);
 		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		isPierceActivate = false;
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
 		// Debug.Log("stickBallCount " + stickBallCount);

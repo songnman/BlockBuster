@@ -8,7 +8,7 @@ public class BallDefault : MonoBehaviour
 {
 	public bool isBallCollision = false;
 	public bool isCollisionBlock = false;
-	TouchContol touchControlSc;
+	[HideInInspector]public TouchContol touchControlSc;
 	SoundManager soundManagerSc;
 
 	void Start() 
