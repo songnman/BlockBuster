@@ -209,13 +209,13 @@ public class BlockManager : MonoBehaviour
 		if (gameObject.transform.GetChild(i).transform.position.y > 3.5f)
 			Destroy(gameObject.transform.GetChild(i).gameObject);
 	}	
-	public void RigidBodyOff()
+	public void RigidBodySwitch(bool bl)
 	{
 		int childCount = gameObject.transform.childCount;
 		for (int i = 0; i < childCount; i++)
 		{
 			if(gameObject.transform.GetChild(i).tag == "Block")
-				gameObject.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
+				gameObject.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = bl;
 				
 		}
 	}

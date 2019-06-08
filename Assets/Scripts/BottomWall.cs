@@ -38,7 +38,6 @@ public class BottomWall : MonoBehaviour
 					// Debug.Log("FirstBall Assigned");
 				}
 			}
-
 		}
 	}
 

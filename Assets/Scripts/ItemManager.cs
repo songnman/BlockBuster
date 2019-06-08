@@ -17,12 +17,20 @@ public class ItemManager : MonoBehaviour
 	}
 	public void PierceFunc()
 	{
-		blockManagerSc.RigidBodyOff();
+		blockManagerSc.RigidBodySwitch(false);
 		touchContolSc.isPierceActivate = true;
+	}
+	public void BigBallFunc()
+	{
+		touchContolSc.isBigBallActivate = true;
+		touchContolSc.firstBallObj.transform.localScale = new Vector3(0.6f,0.6f,1);
 	}
 	public void DoubleFunc()
 	{
 		touchContolSc.isDoubleActivate = true;
-		touchContolSc.firstBallObj.transform.localScale = new Vector3(0.6f,0.6f,1);
+	}
+	public void ReAimFunc()
+	{
+		touchContolSc.isReaimActivate = true;
 	}
 }
