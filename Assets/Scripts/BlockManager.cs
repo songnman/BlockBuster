@@ -175,7 +175,10 @@ public class BlockManager : MonoBehaviour
 		int childCount = gameObject.transform.childCount;
 		for (int i = 0; i < childCount; i++)
 		{
-			StartCoroutine( "MoveBlock", i );
+			if(!touchContolSc.isGameOver)
+				StartCoroutine( "MoveBlock", i );
+			else
+				break;
 		}
 
 		if(shootCount > 50 && gameObject.transform.Find("Block02(Clone)") == null && RandomNum02)
@@ -191,10 +194,14 @@ public class BlockManager : MonoBehaviour
 		Vector3 oriPos = gameObject.transform.GetChild(i).transform.position;
 		for (int j = 0; j < 10 + 1; j++)
 		{
-			gameObject.transform.GetChild(i).transform.position = Vector3.Lerp(oriPos, oriPos + new Vector3(0, -0.75f), j * 0.1f);
+			if(!touchContolSc.isGameOver)
+				gameObject.transform.GetChild(i).transform.position = Vector3.Lerp(oriPos, oriPos + new Vector3(0, -0.75f), j * 0.1f);
+			else
+				break;
 			yield return new WaitForFixedUpdate();
 		}
 		if(transform.GetChild(i).transform.position.y < -2.5f)
+		{
 			if(transform.GetChild(i).gameObject.tag == "BonusBall")
 			{
 				touchContolSc.ballCount++;
@@ -202,13 +209,12 @@ public class BlockManager : MonoBehaviour
 				Destroy(transform.GetChild(i).gameObject);
 			}
 			else
-				ResetGame();
+			{
+				touchContolSc.GameOver();
+				StopAllCoroutines();
+			}
+		}
 	}
-	public void ResetGame()
-	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
-	}
-
 	public IEnumerator MoveUpBlock (int i)
 	{
 		Vector3 oriPos = gameObject.transform.GetChild(i).transform.position;

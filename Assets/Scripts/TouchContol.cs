@@ -71,7 +71,7 @@ public class TouchContol : MonoBehaviour
 	public GameObject ReaimAreaPrefab;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
-		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate )
+		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver )
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			touchPosition.z = 0f;
@@ -358,5 +358,29 @@ public class TouchContol : MonoBehaviour
 		ballCount += 10;
 		blockManagerSc.shootCount += 10;
 		blockManagerSc.shootCountText.text = blockManagerSc.shootCount.ToString("N0");
+	}
+	public GameObject ResultPenalPrefab;
+	public bool isGameOver = false;
+	public void GameOver()
+	{
+		isGameOver = true;
+		ResultPenalPrefab.SetActive(true);
+		firstBallObj.SetActive(false);
+	}
+	public void NewGame()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+	}
+	public void Ranking()
+	{
+
+	}
+	public void Advertise()
+	{
+
+	}	
+	public void ReturnFunc()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
 	}
 }

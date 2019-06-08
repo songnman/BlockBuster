@@ -42,7 +42,7 @@ public class ReaimControl : MonoBehaviour
 						touchContolSc.firstBallObj.transform.position = new Vector3(touchPosition.x,touchContolSc.firstBallObj.transform.position.y);
 					}
 						
-					Debug.Log(touchPosition.x);
+					// Debug.Log(touchPosition.x);
 				break;
 
 				case TouchPhase.Ended:

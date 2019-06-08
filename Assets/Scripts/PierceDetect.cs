@@ -9,7 +9,7 @@ public class PierceDetect : MonoBehaviour
 		if(other.GetComponent<BallDefault>().touchControlSc.isPierceActivate)
 		{
 			// Debug.Log("is on?");
-			Destroy(transform.parent.gameObject);
+			gameObject.transform.parent.GetComponent<BlockDefault>().DestroyBlock01();
 		}
 	}
 }
