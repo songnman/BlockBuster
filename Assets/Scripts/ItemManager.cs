@@ -20,4 +20,9 @@ public class ItemManager : MonoBehaviour
 		blockManagerSc.RigidBodyOff();
 		touchContolSc.isPierceActivate = true;
 	}
+	public void DoubleFunc()
+	{
+		touchContolSc.isDoubleActivate = true;
+		touchContolSc.firstBallObj.transform.localScale = new Vector3(0.6f,0.6f,1);
+	}
 }

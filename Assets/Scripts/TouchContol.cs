@@ -67,7 +67,6 @@ public class TouchContol : MonoBehaviour
 		}
 	}
 	bool isSwipeEnable = false;
-	public bool isPierceActivate = false;
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
 		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom )
@@ -153,6 +152,9 @@ public class TouchContol : MonoBehaviour
 	public Text remainBallText;
 	public Text speedFactorText;
 	public Button skipButton;
+	public bool isPierceActivate = false;
+	public bool isDoubleActivate = false;
+
 	public void SkipShootBall()
 	{
 		stickBallCount = shootBallCount + 100;
@@ -184,6 +186,9 @@ public class TouchContol : MonoBehaviour
 			soundManagerSc.PlayShoot();
 			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
+			
+			if(isDoubleActivate)
+				ballList[i].transform.localScale = new Vector3(0.6f,0.6f,1);
 
 			if (ballCount > 100 && firstBallObj != null && stickBallCount > 10 && collisionBlockFailCount > 10)
 				skipButton.interactable = true;
@@ -218,6 +223,7 @@ public class TouchContol : MonoBehaviour
 		// Debug.Log("shootBallCount " + shootBallCount);
 		yield return new WaitUntil(()=> firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
 		isPierceActivate = false;
+		isDoubleActivate = false;
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
 		// Debug.Log("stickBallCount " + stickBallCount);
@@ -230,6 +236,7 @@ public class TouchContol : MonoBehaviour
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
+
 		foreach (GameObject item in ballList) //[2019-03-09 17:21:41] 차례대로 삭제되는 표현을 위해서 여지를 남김.
 		{
 			if(item != firstBallObj && item != null)
@@ -240,7 +247,9 @@ public class TouchContol : MonoBehaviour
 
 		Instantiate(Resources.Load("Particles/Ef_ball") as GameObject, firstBallObj.transform.position + new Vector3(0,-0.2f), Quaternion.identity);
 		yield return new WaitForSeconds(1.167f);
-
+		
+		firstBallObj.transform.localScale = new Vector3(0.3f,0.3f,1);	//[2019-06-08 12:11:16] 공을 원래크기로 복귀
+		firstBallObj.transform.position = new Vector2 (firstBallObj.transform.position.x, -3.4f);
 		shootBallRemain = ballCount;
 		shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
 		shootBallRemainText.gameObject.SetActive(true);
