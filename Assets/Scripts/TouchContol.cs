@@ -108,7 +108,7 @@ public class TouchContol : MonoBehaviour
 			{
 				case TouchPhase.Began:
 					// Debug.Log("Began");
-					if(touchPosition.y > 3.5f)
+					if(touchPosition.y > 4.0f)
 					{
 						isSwipeEnable = false;
 						break;
@@ -120,10 +120,13 @@ public class TouchContol : MonoBehaviour
 					touchLine.positionCount = 2;
 					isSwipeEnable = true;
 					soundManagerSc.SoundReset();
+					direction = touchPosition;
+					direction = direction.normalized;
+					shootDirection = direction;
 				break;
 
 				case TouchPhase.Moved:
-					if(!isSwipeEnable || touchPosition.y > 3.5f)
+					if(!isSwipeEnable || touchPosition.y > 4.0f)
 					{
 						isSwipeEnable = false;
 						fakeBallPrefab.SetActive(false);
@@ -165,11 +168,12 @@ public class TouchContol : MonoBehaviour
 					fakeBallPrefab.SetActive(false);
 					ballLine.positionCount = 0;
 					touchLine.positionCount = 0;
-					if(!isSwipeEnable || touchPosition.y > 3.5f)
+					if(!isSwipeEnable || touchPosition.y > 4.0f)
 						break;
 					isSwipeEnable = false;
 					//  ballCount = 10;
-					StartCoroutine("ShootBall");
+					if(shootDirection != Vector2.zero)
+						StartCoroutine("ShootBall");
 				break;
 			}
 		}
@@ -324,6 +328,7 @@ public class TouchContol : MonoBehaviour
 		{
 			isDoubleActivate = false;
 		}
+		ItemManager.CheckItemMethod();
 	}
 
 	public void BallCountUpdate()

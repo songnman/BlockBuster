@@ -156,7 +156,7 @@ public class MenuManager : MonoBehaviour
 			skinNum = save.skinNum;
 		}
 	}
-	 public void SetItemCountText()
+	public void SetItemCountText()
 	{
 		shop_SkinInspectorPreview.sprite = inpectorPreviewImage;
 		shopItemList[0].GetComponent<ShopItem>().ItemCount = CountItem1;
