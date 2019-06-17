@@ -7,24 +7,20 @@ public class ItemManager : MonoBehaviour
 {
 	public BlockManager blockManagerSc;
 	public TouchContol touchContolSc;
-	static List<Button> itemButtonList;
-	static bool isUsed1, isUsed2, isUsed3, isUsed4, isUsed5;
+	List<Button> itemButtonList = new List<Button>();
+	bool isUsed1, isUsed2, isUsed3, isUsed4, isUsed5;
 	void Start()
 	{
-		if(itemButtonList == null || itemButtonList.Count < 1)
+		int length = gameObject.transform.childCount;
+		for (int i = 0; i < length; i++)
 		{
-			itemButtonList = new List<Button>();
-			int length = gameObject.transform.childCount;
-			for (int i = 0; i < length; i++)
-			{
-				itemButtonList.Add(gameObject.transform.GetChild(i).GetComponent<Button>());
-				itemButtonList[i].interactable = false;
-			}
+			itemButtonList.Add(gameObject.transform.GetChild(i).GetComponent<Button>());
+			itemButtonList[i].interactable = false;
 		}
 		CheckItemMethod();
 	}
 
-	static public void CheckItemMethod()
+	public void CheckItemMethod()
 	{
 		if (MenuManager.CountItem1 > 0 && !isUsed1)
 			itemButtonList[0].interactable = true;
@@ -37,7 +33,7 @@ public class ItemManager : MonoBehaviour
 		if (MenuManager.CountItem5 > 0 && !isUsed5)
 			itemButtonList[4].interactable = true;
 	}
-	private static void DeActivateButtons()
+	public void DeActivateItems()
 	{
 		int length = itemButtonList.Count;
 		for (int i = 0; i < length; i++)
@@ -52,7 +48,7 @@ public class ItemManager : MonoBehaviour
 		{
 			blockManagerSc.StartCoroutine("MoveUpBlock", i);
 		}
-		DeActivateButtons();
+		DeActivateItems();
 		MenuManager.CountItem1--;
 		MenuManager.SaveGame();
 	}
@@ -61,7 +57,7 @@ public class ItemManager : MonoBehaviour
 		blockManagerSc.RigidBodySwitch(false);
 		touchContolSc.isPierceActivate = true;
 		itemButtonList[1].interactable = false;
-		DeActivateButtons();
+		DeActivateItems();
 		MenuManager.CountItem2--;
 		MenuManager.SaveGame();
 	}
@@ -70,7 +66,7 @@ public class ItemManager : MonoBehaviour
 		touchContolSc.isBigBallActivate = true;
 		touchContolSc.firstBallObj.transform.localScale = new Vector3(0.6f,0.6f,1);
 		itemButtonList[2].interactable = false;
-		DeActivateButtons();
+		DeActivateItems();
 		MenuManager.CountItem3--;
 		MenuManager.SaveGame();
 	}
@@ -78,7 +74,7 @@ public class ItemManager : MonoBehaviour
 	{
 		touchContolSc.isDoubleActivate = true;
 		itemButtonList[3].interactable = false;
-		DeActivateButtons();
+		DeActivateItems();
 		MenuManager.CountItem4--;
 		MenuManager.SaveGame();
 	}
@@ -86,7 +82,7 @@ public class ItemManager : MonoBehaviour
 	{
 		touchContolSc.isReaimActivate = true;
 		itemButtonList[4].interactable = false;
-		DeActivateButtons();
+		DeActivateItems();
 		MenuManager.CountItem5--;
 		MenuManager.SaveGame();
 	}

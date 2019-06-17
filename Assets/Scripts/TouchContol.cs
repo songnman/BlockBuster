@@ -20,6 +20,7 @@ public class TouchContol : MonoBehaviour
 	public GameObject particlePrefab;
 	public BlockManager blockManagerSc;
 	public SoundManager soundManagerSc;
+	public ItemManager itemManagerSc;
 
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
@@ -170,8 +171,8 @@ public class TouchContol : MonoBehaviour
 					touchLine.positionCount = 0;
 					if(!isSwipeEnable || touchPosition.y > 4.0f)
 						break;
+					itemManagerSc.DeActivateItems();
 					isSwipeEnable = false;
-					//  ballCount = 10;
 					if(shootDirection != Vector2.zero)
 						StartCoroutine("ShootBall");
 				break;
@@ -328,7 +329,7 @@ public class TouchContol : MonoBehaviour
 		{
 			isDoubleActivate = false;
 		}
-		ItemManager.CheckItemMethod();
+		itemManagerSc.CheckItemMethod();
 	}
 
 	public void BallCountUpdate()

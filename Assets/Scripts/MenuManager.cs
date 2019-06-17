@@ -62,6 +62,7 @@ public class MenuManager : MonoBehaviour
 	}
 	public void ResetGame()
 	{
+		// LoadGame();
 		UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
 	}
 	public void ShopOpen()
