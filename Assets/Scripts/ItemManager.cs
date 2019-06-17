@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,6 +51,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem1--;
 		MenuManager.SaveGame();
+		isUsed1 = true;
 	}
 	public void PierceFunc()
 	{
@@ -60,6 +61,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem2--;
 		MenuManager.SaveGame();
+		isUsed1 = true;
 	}
 	public void BigBallFunc()
 	{
@@ -69,6 +71,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem3--;
 		MenuManager.SaveGame();
+		isUsed1 = true;
 	}
 	public void DoubleFunc()
 	{
@@ -77,6 +80,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem4--;
 		MenuManager.SaveGame();
+		isUsed1 = true;
 	}
 	public void ReAimFunc()
 	{
@@ -85,5 +89,6 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem5--;
 		MenuManager.SaveGame();
+		isUsed1 = true;
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -78,6 +78,7 @@ public class MenuManager : MonoBehaviour
 	{
 		shop_ItemPanelPrefab.SetActive(true);
 		shop_SkinPanelPrefab.SetActive(false);
+		SetItemCountText();
 	}
 	public void ToggleSkin()
 	{
@@ -160,6 +161,7 @@ public class MenuManager : MonoBehaviour
 	public void SetItemCountText()
 	{
 		shop_SkinInspectorPreview.sprite = inpectorPreviewImage;
+/*
 		shopItemList[0].GetComponent<ShopItem>().ItemCount = CountItem1;
 		shopItemList[1].GetComponent<ShopItem>().ItemCount = CountItem2;
 		shopItemList[2].GetComponent<ShopItem>().ItemCount = CountItem3;
@@ -167,6 +169,12 @@ public class MenuManager : MonoBehaviour
 		shopItemList[4].GetComponent<ShopItem>().ItemCount = CountItem5;
 		for (int i = 0; i < shopItemList.Count; i++)
 			shopItemList[i].transform.GetChild(1).GetChild(0).GetComponent<UnityEngine.UI.Text>().text = shopItemList[i].GetComponent<ShopItem>().ItemCount.ToString();
+*/
+shopItemList[0].transform.GetChild(1).GetChild(0).GetComponent<Text>().text = CountItem1.ToString();
+shopItemList[1].transform.GetChild(1).GetChild(0).GetComponent<Text>().text = CountItem2.ToString();
+shopItemList[2].transform.GetChild(1).GetChild(0).GetComponent<Text>().text = CountItem3.ToString();
+shopItemList[3].transform.GetChild(1).GetChild(0).GetComponent<Text>().text = CountItem4.ToString();
+shopItemList[4].transform.GetChild(1).GetChild(0).GetComponent<Text>().text = CountItem5.ToString();
 		SaveGame();
 	}
 	
