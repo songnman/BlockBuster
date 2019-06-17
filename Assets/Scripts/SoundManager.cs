@@ -6,36 +6,36 @@ public class SoundManager : MonoBehaviour
 {
 	public List<AudioSource> bgmSourceList;
 	public List<AudioSource> fxSourceList;
-	GameObject bgmPrefab;
-	GameObject fxPrefab;
+	public GameObject bgmPrefab;
+	public GameObject fxPrefab;
 	void Start()
 	{
-		// Instantiate(Resources.Load("Sounds/BGM/1") as AudioClip);
-		bgmSourceList = new List<AudioSource>();
-		fxSourceList = new List<AudioSource>();
-		bgmPrefab = gameObject.transform.GetChild(0).gameObject;
-		fxPrefab = gameObject.transform.GetChild(1).gameObject;
-		
-		int bgmLength = bgmPrefab.transform.childCount;
-		for (int i = 0; i < bgmLength; i++)
-		{
-			bgmSourceList.Add(bgmPrefab.transform.GetChild(i).GetComponent<AudioSource>());
-			bgmSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
-			bgmSourceList[i].loop = true;
-			bgmSourceList[i].Play();
-			if(i != 0)
-				bgmSourceList[i].volume = 0;
-		}
 
-		int fxLength = fxPrefab.transform.childCount;
-		for (int i = 0; i < fxLength; i++)
+		if(bgmPrefab != null && fxPrefab != null)
 		{
-			fxSourceList.Add(fxPrefab.transform.GetChild(i).GetComponent<AudioSource>());
-			// fxSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
-			// fxSourceList[i].loop = true;
-			// fxSourceList[i].Play();
-			// if(i != 0)
-			// 	fxSourceList[i].volume = 0;
+			bgmSourceList = new List<AudioSource>();
+			fxSourceList = new List<AudioSource>();
+			
+			int bgmLength = bgmPrefab.transform.childCount;
+			for (int i = 0; i < bgmLength; i++)
+			{
+				bgmSourceList.Add(bgmPrefab.transform.GetChild(i).GetComponent<AudioSource>());
+				bgmSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
+				bgmSourceList[i].loop = true;
+				bgmSourceList[i].Play();
+				if(i != 0)
+					bgmSourceList[i].volume = 0;
+			}
+			int fxLength = fxPrefab.transform.childCount;
+			for (int i = 0; i < fxLength; i++)
+			{
+				fxSourceList.Add(fxPrefab.transform.GetChild(i).GetComponent<AudioSource>());
+				// fxSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
+				// fxSourceList[i].loop = true;
+				// fxSourceList[i].Play();
+				// if(i != 0)
+				// 	fxSourceList[i].volume = 0;
+			}
 		}
 	}
 	public void PlayShoot()

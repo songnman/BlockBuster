@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14807855}
   - component: {fileID: 14807856}
+  - component: {fileID: 14807857}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -462,6 +463,23 @@ MonoBehaviour:
   shop_ItemPanelPrefab: {fileID: 723093869}
   shop_SkinPanelPrefab: {fileID: 1728669217}
   shop_SkinInspectorPreview: {fileID: 1612460568}
+--- !u!114 &14807857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14807854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5af27ccfab7c44ea24cb8fb9a8fba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmSourceList: []
+  fxSourceList: []
+  bgmPrefab: {fileID: 0}
+  fxPrefab: {fileID: 0}
+  hitBallCount: 0
 --- !u!1 &20306096
 GameObject:
   m_ObjectHideFlags: 0
