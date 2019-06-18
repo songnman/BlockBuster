@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,15 +22,15 @@ public class ItemManager : MonoBehaviour
 
 	public void CheckItemMethod()
 	{
-		if (MenuManager.CountItem1 > 0 && !isUsed1)
+		if (!isUsed1 && MenuManager.CountItem1 > 0)
 			itemButtonList[0].interactable = true;
-		if (MenuManager.CountItem2 > 0 && !isUsed2)
+		if (!isUsed2 && MenuManager.CountItem2 > 0)
 			itemButtonList[1].interactable = true;
-		if (MenuManager.CountItem3 > 0 && !isUsed3)
+		if (!isUsed3 && MenuManager.CountItem3 > 0)
 			itemButtonList[2].interactable = true;
-		if (MenuManager.CountItem4 > 0 && !isUsed4)
+		if (!isUsed4 && MenuManager.CountItem4 > 0)
 			itemButtonList[3].interactable = true;
-		if (MenuManager.CountItem5 > 0 && !isUsed5)
+		if (!isUsed5 && MenuManager.CountItem5 > 0)
 			itemButtonList[4].interactable = true;
 	}
 	public void DeActivateItems()
@@ -61,7 +61,15 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem2--;
 		MenuManager.SaveGame();
-		isUsed1 = true;
+		isUsed2 = true;
+	}	public void DoubleFunc()
+	{
+		touchContolSc.isDoubleActivate = true;
+		itemButtonList[3].interactable = false;
+		DeActivateItems();
+		MenuManager.CountItem3--;
+		MenuManager.SaveGame();
+		isUsed4 = true;
 	}
 	public void BigBallFunc()
 	{
@@ -69,18 +77,9 @@ public class ItemManager : MonoBehaviour
 		touchContolSc.firstBallObj.transform.localScale = new Vector3(0.6f,0.6f,1);
 		itemButtonList[2].interactable = false;
 		DeActivateItems();
-		MenuManager.CountItem3--;
-		MenuManager.SaveGame();
-		isUsed1 = true;
-	}
-	public void DoubleFunc()
-	{
-		touchContolSc.isDoubleActivate = true;
-		itemButtonList[3].interactable = false;
-		DeActivateItems();
 		MenuManager.CountItem4--;
 		MenuManager.SaveGame();
-		isUsed1 = true;
+		isUsed3 = true;
 	}
 	public void ReAimFunc()
 	{
@@ -89,6 +88,6 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem5--;
 		MenuManager.SaveGame();
-		isUsed1 = true;
+		isUsed5 = true;
 	}
 }
