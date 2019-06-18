@@ -24,6 +24,8 @@ public class TouchContol : MonoBehaviour
 
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
+	public Text currency0Text, currency1Text;
+
 	public bool isButtonDown = false;
 	public int collisionBlockFailCount = 0;
 
@@ -55,6 +57,9 @@ public class TouchContol : MonoBehaviour
 	}
 	void Start()
 	{
+		currency0Text.text = MenuManager.currency0.ToString();
+		currency1Text.text = MenuManager.currency1.ToString();
+
 		Application.targetFrameRate = 60;
 		ballLine = transform.GetChild(0).GetComponent<LineRenderer>();
 		touchLine = transform.GetChild(1).GetComponent<LineRenderer>();
@@ -399,13 +404,52 @@ public class TouchContol : MonoBehaviour
 		blockManagerSc.shootCountText.text = blockManagerSc.shootCount.ToString("N0");
 	}
 	public GameObject ResultPenalPrefab;
+	public Text result_LastStageText, result_Currency0Text, result_Currency1Text;
 	public bool isGameOver = false;
 	public void GameOver()
 	{
 		isGameOver = true;
-		ResultPenalPrefab.SetActive(true);
 		firstBallObj.SetActive(false);
+		MenuManager.currency0 += CalcReward();
+		MenuManager.SaveGame();
+
+		currency0Text.text = MenuManager.currency0.ToString();
+		currency1Text.text = MenuManager.currency1.ToString();
+		result_LastStageText.text = "STAGE " + blockManagerSc.shootCount.ToString();
+		result_Currency0Text.text = CalcReward().ToString();
+		result_Currency1Text.text = 0.ToString();
+		
+		ResultPenalPrefab.SetActive(true);
 	}
+
+	private int CalcReward()
+	{
+		if 		(blockManagerSc.shootCount > 99)
+		{
+			return blockManagerSc.shootCount * 3;
+		}
+		else if (blockManagerSc.shootCount > 199)
+		{
+			return blockManagerSc.shootCount * 5;
+		}
+		else if (blockManagerSc.shootCount > 299)
+		{
+			return blockManagerSc.shootCount * 10;
+		}
+		else if (blockManagerSc.shootCount > 399)
+		{
+			return blockManagerSc.shootCount * 15;
+		}
+		else if (blockManagerSc.shootCount > 499)
+		{
+			return blockManagerSc.shootCount * 20;
+		}
+		else
+		{
+			return blockManagerSc.shootCount;
+		}
+	}
+
 	public void NewGame()
 	{
 		UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");

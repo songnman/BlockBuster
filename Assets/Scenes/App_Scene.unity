@@ -463,6 +463,8 @@ MonoBehaviour:
   shop_ItemPanelPrefab: {fileID: 723093869}
   shop_SkinPanelPrefab: {fileID: 1728669217}
   shop_SkinInspectorPreview: {fileID: 1612460568}
+  currency0Text: {fileID: 1368263278}
+  currency1Text: {fileID: 984731629}
 --- !u!82 &14807857
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1516,7 +1518,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 102859420}
-  - component: {fileID: 102859421}
   m_Layer: 5
   m_Name: Item (4)
   m_TagString: Untagged
@@ -1546,19 +1547,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &102859421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 102859419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b52f1c99b50344c97615ef7b5efa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCount: 0
 --- !u!1 &103952101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,7 +1879,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 120332043}
-  - component: {fileID: 120332044}
   m_Layer: 5
   m_Name: Item (2)
   m_TagString: Untagged
@@ -1921,19 +1908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &120332044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120332042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b52f1c99b50344c97615ef7b5efa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCount: 0
 --- !u!1 &131126238
 GameObject:
   m_ObjectHideFlags: 0
@@ -6688,7 +6662,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584948114}
-  - component: {fileID: 584948115}
   m_Layer: 5
   m_Name: Item (3)
   m_TagString: Untagged
@@ -6718,19 +6691,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &584948115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584948113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b52f1c99b50344c97615ef7b5efa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCount: 0
 --- !u!1 &585063831
 GameObject:
   m_ObjectHideFlags: 0
@@ -12074,7 +12034,7 @@ GameObject:
   - component: {fileID: 984731629}
   - component: {fileID: 984731628}
   m_Layer: 5
-  m_Name: Currency (2)
+  m_Name: Currency (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13352,7 +13312,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073907497}
-  - component: {fileID: 1073907498}
   m_Layer: 5
   m_Name: Item (5)
   m_TagString: Untagged
@@ -13382,19 +13341,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1073907498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073907496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b52f1c99b50344c97615ef7b5efa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCount: 0
 --- !u!1 &1080576388
 GameObject:
   m_ObjectHideFlags: 0
@@ -15257,7 +15203,7 @@ GameObject:
   - component: {fileID: 1368263278}
   - component: {fileID: 1368263277}
   m_Layer: 5
-  m_Name: Currency (1)
+  m_Name: Currency (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25398,7 +25344,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1912160471}
-  - component: {fileID: 1912160472}
   m_Layer: 5
   m_Name: Item (1)
   m_TagString: Untagged
@@ -25428,19 +25373,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1912160472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912160470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b52f1c99b50344c97615ef7b5efa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCount: 0
 --- !u!1 &1938857755
 GameObject:
   m_ObjectHideFlags: 0

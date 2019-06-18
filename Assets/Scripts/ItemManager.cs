@@ -69,7 +69,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem3--;
 		MenuManager.SaveGame();
-		isUsed4 = true;
+		isUsed3 = true;
 	}
 	public void BigBallFunc()
 	{
@@ -79,7 +79,7 @@ public class ItemManager : MonoBehaviour
 		DeActivateItems();
 		MenuManager.CountItem4--;
 		MenuManager.SaveGame();
-		isUsed3 = true;
+		isUsed4 = true;
 	}
 	public void ReAimFunc()
 	{
