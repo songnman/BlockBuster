@@ -103,6 +103,8 @@ public class TouchContol : MonoBehaviour
 	bool isSwipeEnable = false;
 	public GameObject ReaimAreaPrefab;
 	public bool isGameStart = false;
+	bool isPassMove = false;
+
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
 		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver && isGameStart)
@@ -119,7 +121,6 @@ public class TouchContol : MonoBehaviour
 						isSwipeEnable = false;
 						break;
 					}
-					fakeBallPrefab.SetActive(true);
 					shootPos = firstBallObj.transform.position;
 					oriTouchPos = touchPosition;
 					ballLine.positionCount = 2;
@@ -128,10 +129,11 @@ public class TouchContol : MonoBehaviour
 					soundManagerSc.SoundReset();
 					direction = touchPosition;
 					direction = direction.normalized;
-					shootDirection = direction;
+					GameObject.Find("1Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 
 				case TouchPhase.Moved:
+					isPassMove = true;
 					if(!isSwipeEnable || touchPosition.y > 4.0f)
 					{
 						isSwipeEnable = false;
@@ -146,7 +148,8 @@ public class TouchContol : MonoBehaviour
 					ballLine.material.mainTextureOffset += Vector2.left * 0.1f;
 					direction = touchPosition - oriTouchPos;
 					direction = direction.normalized;
-					float directionYLimit = 0.25f;
+					float directionYLimit = 0.25f; //[2019-06-20 01:45:39] 최소각도.
+					fakeBallPrefab.SetActive(true);
 					if(direction.y > directionYLimit)
 					{
 						RaycastHit2D hits = Physics2D.CircleCast(shootPos, 0.21f, direction,100,LayerMask.GetMask("Block", "Block02", "Wall"));
@@ -166,11 +169,13 @@ public class TouchContol : MonoBehaviour
 						ballLine.SetPosition(1, hits.point);
 						shootDirection = (new Vector2(Mathf.Sign(direction.x), directionYLimit)).normalized;
 					}
+					GameObject.Find("2Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 
 				case TouchPhase.Ended:
+					if(!isPassMove)
+						shootDirection = (new Vector2(Mathf.Sign(direction.x), 0.25f)).normalized;
 
-					// Debug.Log("End");
 					fakeBallPrefab.SetActive(false);
 					ballLine.positionCount = 0;
 					touchLine.positionCount = 0;
@@ -178,8 +183,10 @@ public class TouchContol : MonoBehaviour
 						break;
 					itemManagerSc.DeActivateItems();
 					isSwipeEnable = false;
+					isPassMove = false;
 					if(shootDirection != Vector2.zero)
 						StartCoroutine("ShootBall");
+					GameObject.Find("3Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 			}
 		}
@@ -254,7 +261,7 @@ public class TouchContol : MonoBehaviour
 					StartCoroutine("DestroyBalls", targetBall);
 				}
 			}
-
+			GameObject.Find("4Test").GetComponent<Text>().text = shootDirection.ToString();
 			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * (500 /*+ 400 * BallSpeedFactor * 0.1f*/));
 
 			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor));
