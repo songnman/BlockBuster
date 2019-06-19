@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
 	public GameObject shopPrefab;
 	public GameObject shop_ItemPanelPrefab;
 	public GameObject shop_SkinPanelPrefab;
+	public GameObject shop_SkinBuyBtnPrefab , shop_SkinEquipBtnPrefab;
 	public Image shop_SkinInspectorPreview;
 	public Text currency0Text, currency1Text;
 	 List<GameObject> shopItemList = new List<GameObject>();
@@ -56,12 +57,74 @@ public class MenuManager : MonoBehaviour
 		LoadGame();
 		SetItemCountText();
 
-		inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
 
 	}
 	public void SelectSkin()
 	{
+		//[2019-06-20 01:10:07] 선택한 스킨을 프리뷰에 뿌려줌
 		shop_SkinInspectorPreview.sprite = skinToggleList.Find(i => i.isOn).transform.GetChild(1).GetComponent<Image>().sprite;
+		
+		//[2019-06-20 01:09:52] 선택한 스킨의 가격을 측정.
+		shop_SkinInspectorPreview.transform.parent.GetChild(2).GetComponent<Text>().text = CalcSkinCost().ToString("N0");
+		
+		//[2019-06-20 01:08:42] 선택한 스킨을 갖고있는지 판단해서 구입 버튼과 가격을 숨김
+		if(isHaveSkinList[skinToggleList.FindIndex(i => i.isOn)])
+		{
+			shop_SkinBuyBtnPrefab.SetActive(false);
+			shop_SkinInspectorPreview.transform.parent.GetChild(2).gameObject.SetActive(false);
+		}
+		else
+		{
+			shop_SkinBuyBtnPrefab.SetActive(true);
+			shop_SkinInspectorPreview.transform.parent.GetChild(2).gameObject.SetActive(true);
+		}
+		
+		//[2019-06-20 01:09:28] 돈이 충분하지 않으면 버튼을 비활성화 시킴
+		if(currency0 < CalcSkinCost())
+			shop_SkinBuyBtnPrefab.GetComponent<Button>().interactable = false;
+		else
+			shop_SkinBuyBtnPrefab.GetComponent<Button>().interactable = true;
+		
+		//[2019-06-20 01:11:09] 현재 착용한 스킨을 선택 할 시 버튼을 비활성화 시키고 버튼 TEXT를 바꿈
+		if(skinNum == skinToggleList.FindIndex(i => i.isOn) + 1)
+		{
+			shop_SkinEquipBtnPrefab.transform.GetChild(0).GetComponent<Text>().text = "EQUIPED";
+			shop_SkinEquipBtnPrefab.GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			shop_SkinEquipBtnPrefab.transform.GetChild(0).GetComponent<Text>().text = "EQUIP";
+			shop_SkinEquipBtnPrefab.GetComponent<Button>().interactable = true;
+		}
+	}
+	public void BuySkin()
+	{
+		currency0 -= CalcSkinCost();
+		isHaveSkinList[skinToggleList.FindIndex(i => i.isOn)] = true;
+		/*
+		for (int i = 0; i < 25; i++)
+		{
+			Debug.Log((i+1) +" "+ isHaveSkinList[i]);
+		}
+		//*/
+		SetItemCountText();
+		SelectSkin();
+	}
+	int CalcSkinCost()
+	{
+		int indexNum = skinToggleList.FindIndex(i => i.isOn);
+		if		(indexNum < 4)
+			return 300;
+		else if	(indexNum < 10)
+			return 500;
+		else if	(indexNum < 15)
+			return 1000;
+		else if	(indexNum < 20)
+			return 1500;
+		else if	(indexNum < 22)
+			return 5000;
+		else
+			return 10000;
 	}
 	public void EquipSkin()
 	{
@@ -71,6 +134,7 @@ public class MenuManager : MonoBehaviour
 			skinNum = skinToggleList.FindIndex(i => i.isOn) + 1;
 			inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
 			SetItemCountText();
+			SelectSkin();
 		}
 	}
 	public void ResetGame()
@@ -81,6 +145,10 @@ public class MenuManager : MonoBehaviour
 	public void ShopOpen()
 	{
 		shopPrefab.SetActive(true);
+		inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
+		skinToggleList[skinNum - 1].isOn = true;
+		SelectSkin();
+
 		SetItemCountText();
 	}
 	public void ShopClose()
@@ -138,11 +206,14 @@ public class MenuManager : MonoBehaviour
 		skinNum = 1;
 		currency0 = 0;
 		currency1 = 0;
+		
 		isHaveSkinList = new List<bool>();
-
 		for (int i = 0; i < 25; i++)
 		{
-			isHaveSkinList.Add(false);
+			if(i == 0)
+				isHaveSkinList.Add(true);
+			else
+				isHaveSkinList.Add(false);
 			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 		}
 		Debug.Log("isHaveSkinList.Count = " + isHaveSkinList.Count);
