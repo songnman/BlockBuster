@@ -66,9 +66,12 @@ public class MenuManager : MonoBehaviour
 	public void EquipSkin()
 	{
 		// Debug.Log(skinToggleList.FindIndex(i => i.isOn));
-		skinNum = skinToggleList.FindIndex(i => i.isOn) + 1;
-		inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
-		SetItemCountText();
+		if(skinToggleList.FindIndex(i => i.isOn) > -1)
+		{
+			skinNum = skinToggleList.FindIndex(i => i.isOn) + 1;
+			inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
+			SetItemCountText();
+		}
 	}
 	public void ResetGame()
 	{
