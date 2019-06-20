@@ -13,7 +13,7 @@ public class BallDefault : MonoBehaviour
 
 	void Start() 
 	{
-		GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
+		// GetComponent<Rigidbody2D>().velocity += GetComponent<Rigidbody2D>().velocity * touchControlSc.BallSpeedFactor * 0.01f;
 	}
 	private void OnCollisionEnter2D(Collision2D other) 
 	{

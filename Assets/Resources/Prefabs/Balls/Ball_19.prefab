@@ -86,6 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBallCollision: 0
   isCollisionBlock: 0
+  touchControlSc: {fileID: 0}
 --- !u!1 &1586372432166265326
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba9343352e2a98747b4ee392248e55b6, type: 2}
+  - {fileID: 2100000, guid: 8362bdb0051ba3348b9800fd8eab778e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 7cbc45a3427b1a145a0d7346e2b47c91, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 21429400d74cd374483434e74319e070, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0

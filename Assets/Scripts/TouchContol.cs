@@ -33,19 +33,21 @@ public class TouchContol : MonoBehaviour
 	{
 		gStartCountText.transform.parent.gameObject.SetActive(true);
 		StartCoroutine("StartCountDown");
+		// blockManagerSc.CreateBlockLineAndMove();
+		// isGameStart = true;
 	}
 	public Text gStartCountText;
 	IEnumerator StartCountDown()
 	{
-		int iStartCount = 3;
-		for (int i = 0; i < iStartCount; i++)
-		{
-			gStartCountText.text = (iStartCount - i).ToString("N0");
-			// Instantiate(Resources.Load("Particles/Ember02") as GameObject,gStartCountText.transform.position, Quaternion.identity).transform.SetParent(particlePrefab.transform);
+		// int iStartCount = 3;
+		// for (int i = 0; i < iStartCount; i++)
+		// {
+		// 	gStartCountText.text = (iStartCount - i).ToString("N0");
+		// 	// Instantiate(Resources.Load("Particles/Ember02") as GameObject,gStartCountText.transform.position, Quaternion.identity).transform.SetParent(particlePrefab.transform);
 
-			yield return new WaitForSeconds(1f);
-		}
-		isGameStart = true;
+		// 	yield return new WaitForSeconds(1f);
+		// }
+		
 		for (int i = 0; i < 51; i++)
 		{
 			gStartCountText.color = Color.Lerp(new Color (1,1,1,1), new Color (1,1,1,0), i * 0.02f);
@@ -53,6 +55,7 @@ public class TouchContol : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 		Destroy(gStartCountText.transform.parent.gameObject);
+		isGameStart = true;
 		blockManagerSc.CreateBlockLineAndMove();
 	}
 	void Start()
@@ -129,7 +132,7 @@ public class TouchContol : MonoBehaviour
 					soundManagerSc.SoundReset();
 					direction = touchPosition;
 					direction = direction.normalized;
-					GameObject.Find("1Test").GetComponent<Text>().text = shootDirection.ToString();
+					// GameObject.Find("1Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 
 				case TouchPhase.Moved:
@@ -169,7 +172,7 @@ public class TouchContol : MonoBehaviour
 						ballLine.SetPosition(1, hits.point);
 						shootDirection = (new Vector2(Mathf.Sign(direction.x), directionYLimit)).normalized;
 					}
-					GameObject.Find("2Test").GetComponent<Text>().text = shootDirection.ToString();
+					// GameObject.Find("2Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 
 				case TouchPhase.Ended:
@@ -186,7 +189,7 @@ public class TouchContol : MonoBehaviour
 					isPassMove = false;
 					if(shootDirection != Vector2.zero)
 						StartCoroutine("ShootBall");
-					GameObject.Find("3Test").GetComponent<Text>().text = shootDirection.ToString();
+					// GameObject.Find("3Test").GetComponent<Text>().text = shootDirection.ToString();
 				break;
 			}
 		}
@@ -261,7 +264,7 @@ public class TouchContol : MonoBehaviour
 					StartCoroutine("DestroyBalls", targetBall);
 				}
 			}
-			GameObject.Find("4Test").GetComponent<Text>().text = shootDirection.ToString();
+			// GameObject.Find("4Test").GetComponent<Text>().text = shootDirection.ToString();
 			ballList[i].GetComponent<Rigidbody2D>().AddForce(shootDirection * (500 /*+ 400 * BallSpeedFactor * 0.1f*/));
 
 			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor));

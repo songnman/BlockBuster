@@ -37,18 +37,20 @@ public class MenuManager : MonoBehaviour
 
 		for (int i = 0; i < 25; i++)
 		{
-			Sprite sprite = Resources.Load<Sprite>("Icon/C_icon_" + (i + 1));
+			
 			shopSkinList.Add(shop_SkinPanelPrefab.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(i).gameObject);
 			skinToggleList.Add(shopSkinList[i].GetComponent<Toggle>());	//[2019-06-02 15:18:56] 토글리스트 생성
-			if (shopSkinList[i].transform.GetChild(1).GetComponent<Text>() != null)
-				Destroy(shopSkinList[i].transform.GetChild(1).gameObject);	//[2019-06-02 14:50:51] 라벨을 부숨
-
 			isHaveSkinList.Add(false);
-			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 
+			
+			// if (shopSkinList[i].transform.GetChild(1).GetComponent<Text>() != null)
+			// Destroy(shopSkinList[i].transform.GetChild(1).gameObject);	//[2019-06-02 14:50:51] 라벨을 부숨
+			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
+			
+			Sprite sprite = Resources.Load<Sprite>("Icon/C_icon_" + (i + 1));
 			GameObject go = new GameObject();
 			go.AddComponent<Image>().sprite = sprite;
-			go.name = "Skin" + (i + 1);
+			go.name = "BallIcon" + (i + 1);
 			go.transform.SetParent(shopSkinList[i].transform);
 			go.transform.transform.localPosition = Vector3.zero;
 			go.transform.transform.localScale = new Vector3(2,2,0);
@@ -62,7 +64,13 @@ public class MenuManager : MonoBehaviour
 	public void SelectSkin()
 	{
 		//[2019-06-20 01:10:07] 선택한 스킨을 프리뷰에 뿌려줌
-		shop_SkinInspectorPreview.sprite = skinToggleList.Find(i => i.isOn).transform.GetChild(1).GetComponent<Image>().sprite;
+		shop_SkinInspectorPreview.sprite = Resources.Load<Sprite>("Icon/C_icon_" + (skinToggleList.FindIndex(i => i.isOn) + 1));
+
+		// shop_SkinInspectorPreview.sprite = skinToggleList.Find(i => i.isOn).transform.GetChild(1).GetComponent<Image>().sprite;
+		// GameObject go = Instantiate(Resources.Load<GameObject>("Prefabs/Balls/Ball_" + (skinToggleList.FindIndex(i => i.isOn) + 1)));
+		// go.transform.SetParent(shop_SkinInspectorPreview.transform);
+		// go.transform.localPosition = Vector2.zero;
+		
 		
 		//[2019-06-20 01:09:52] 선택한 스킨의 가격을 측정.
 		shop_SkinInspectorPreview.transform.parent.GetChild(2).GetComponent<Text>().text = CalcSkinCost().ToString("N0");
@@ -113,15 +121,17 @@ public class MenuManager : MonoBehaviour
 	int CalcSkinCost()
 	{
 		int indexNum = skinToggleList.FindIndex(i => i.isOn);
-		if		(indexNum < 4)
+		if		(indexNum < 3)
 			return 300;
-		else if	(indexNum < 10)
+		else if	(indexNum < 5)
 			return 500;
-		else if	(indexNum < 15)
+		else if	(indexNum < 9)
 			return 1000;
-		else if	(indexNum < 20)
+		else if	(indexNum < 13)
 			return 1500;
-		else if	(indexNum < 22)
+		else if	(indexNum < 17)
+			return 2500;
+		else if	(indexNum < 21)
 			return 5000;
 		else
 			return 10000;

@@ -109,9 +109,9 @@ MonoBehaviour:
     materialsMaskDisabled:
     - {fileID: 2100000, guid: b8e1fcedf65891d49b3a4e6b8d1a027c, type: 2}
     materialsInsideMask:
-    - {fileID: 2100000, guid: 77e751072a9b1414899ed51d83ee7e96, type: 2}
+    - {fileID: 0}
     materialsOutsideMask:
-    - {fileID: 2100000, guid: d87bcfd9f78625540b319ec9ef731d3b, type: 2}
+    - {fileID: 0}
   disableRenderingOnOverride: 1
   _animationName: loop
   loop: 1
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBallCollision: 0
   isCollisionBlock: 0
+  touchControlSc: {fileID: 0}
 --- !u!1 &8744447091701822246
 GameObject:
   m_ObjectHideFlags: 0
