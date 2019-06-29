@@ -77,7 +77,7 @@ public class TouchContol : MonoBehaviour
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
 		firstBallObj.GetComponent<BallDefault>().touchControlSc = this;
-		firstBallObj.transform.position = new Vector2 (0, -3.4f);
+		firstBallObj.transform.position = new Vector2 (0, -4.0f);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
@@ -271,10 +271,10 @@ public class TouchContol : MonoBehaviour
 
 			shootBallRemain--;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
-			if (shootBallRemain < 1)
-			{
-				shootBallRemainText.gameObject.SetActive(false);
-			}
+			// if (shootBallRemain < 1)
+			// {
+			// 	shootBallRemainText.gameObject.SetActive(false);
+			// }
 
 			RemainBallCount();
 		}
@@ -309,8 +309,8 @@ public class TouchContol : MonoBehaviour
 		
 		BallCountUpdate();
 		
-		shootBallRemainText.gameObject.SetActive(true);
-		shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -0.5f);
+		// shootBallRemainText.gameObject.SetActive(true);
+		// shootBallRemainText.transform.position = (Vector2)firstBallObj.transform.position + new Vector2(0, -0.5f);
 
 		collisionBlockFailCount = 0;
 		stickBallCount = 0;

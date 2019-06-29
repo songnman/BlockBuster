@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spine-unity-editor", "spine-unity-editor.csproj", "{477C6D00-C439-4DA2-AF6E-4677FD1B4F92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{4AC80165-E90F-74DE-A5DD-816871C41537}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{477C6D00-C439-4DA2-AF6E-4677FD1B4F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{477C6D00-C439-4DA2-AF6E-4677FD1B4F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{477C6D00-C439-4DA2-AF6E-4677FD1B4F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AC80165-E90F-74DE-A5DD-816871C41537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC80165-E90F-74DE-A5DD-816871C41537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC80165-E90F-74DE-A5DD-816871C41537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC80165-E90F-74DE-A5DD-816871C41537}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

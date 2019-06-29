@@ -14,7 +14,7 @@ public class FPSDisplay : MonoBehaviour
 		{
 			current = 0;
 			avgFrameRate = (int)(1f / Time.unscaledDeltaTime);
-			display_Text.text = avgFrameRate.ToString() + " FPS";
+			display_Text.text = avgFrameRate.ToString();
 		}
 		else
 		{

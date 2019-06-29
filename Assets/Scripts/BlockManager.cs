@@ -202,7 +202,7 @@ public class BlockManager : MonoBehaviour
 				break;
 			yield return new WaitForFixedUpdate();
 		}
-		if(transform.GetChild(i).transform.position.y < -2.5f)
+		if(transform.GetChild(i).transform.position.y < -3.5f)
 		{
 			if(transform.GetChild(i).gameObject.tag == "BonusBall")
 			{
