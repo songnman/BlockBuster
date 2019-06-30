@@ -10,6 +10,7 @@ public class BlockDefault : MonoBehaviour
 	public GameObject particle;
 	public bool isBallCollision = false;
 	public SoundManager soundManagerSc;
+	public TouchContol touchContolSc;
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "Ball")
@@ -32,7 +33,7 @@ public class BlockDefault : MonoBehaviour
 			
 			if(gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
 				gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-			leftCount--;
+			leftCount -= touchContolSc.ballPower;
 			leftCountText.text = leftCount.ToString("N0");
 
 

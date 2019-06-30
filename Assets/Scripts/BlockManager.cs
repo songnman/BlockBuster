@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class BlockManager : MonoBehaviour
 {
@@ -109,8 +110,10 @@ public class BlockManager : MonoBehaviour
 	{
 		GameObject blockObj = Instantiate(block02Prefab, new Vector3(0, 0), Quaternion.Euler(0,0,45) );
 		BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
+
 		blockObj.transform.SetParent(gameObject.transform);
 		blockObj.GetComponent<BlockDefault>().soundManagerSc = soundManagerSc;
+		blockObj.GetComponent<BlockDefault>().touchContolSc = touchContolSc;
 
 		
 		object[] parms = new object[3]{ blockObj, 1.0f, 1.0f};
@@ -147,6 +150,7 @@ public class BlockManager : MonoBehaviour
 					BlockDefault blockDefaultSc = blockObj.GetComponent<BlockDefault>();
 					blockObj.transform.SetParent(gameObject.transform);
 					blockObj.GetComponent<BlockDefault>().soundManagerSc = soundManagerSc;
+					blockObj.GetComponent<BlockDefault>().touchContolSc = touchContolSc;
 
 					object[] parms = new object[3]{ blockObj,1.0f , 0.75f};
 					StartCoroutine("IncBlockScale", parms);
@@ -164,7 +168,15 @@ public class BlockManager : MonoBehaviour
 					bonusBallObj.transform.SetParent(gameObject.transform);
 					bonusBallObj.GetComponent<BonusBall>().soundManagerSc = soundManagerSc;
 					bonusBallObj.GetComponent<BonusBall>().touchContolSc = touchContolSc;
-					
+
+					GameObject bonusBallSpine = Instantiate(touchContolSc.ballPrefab);
+					bonusBallSpine.transform.SetParent(bonusBallObj.transform);
+					bonusBallSpine.GetComponent<CircleCollider2D>().enabled = false;
+					bonusBallSpine.GetComponent<BallDefault>().enabled = false;
+					bonusBallSpine.transform.GetChild(0).localPosition = new Vector2(0, -1.15f);
+					bonusBallSpine.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
+					bonusBallSpine.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
+
 					object[] parms = new object[3]{ bonusBallObj, 1.0f, 1.0f};
 					StartCoroutine("IncBlockScale", parms);
 
@@ -202,7 +214,7 @@ public class BlockManager : MonoBehaviour
 				break;
 			yield return new WaitForFixedUpdate();
 		}
-		if(transform.GetChild(i).transform.position.y < -3.5f)
+		if(transform.GetChild(i).transform.position.y < -4.25f)
 		{
 			if(transform.GetChild(i).gameObject.tag == "BonusBall")
 			{

@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
 	static public int skinNum;
 	Sprite inpectorPreviewImage;
 	int item1value = 1000,	item2value = 400,	item3value = 150,	item4value = 160, item5value = 100;
-	
+	public Sprite tempSprite, tempSprite2;
 	void Start()
 	{
 		ShopClose();
@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
 			skinNum = 1;
 
 		for (int i = 0; i < 5; i++)
-			shopItemList.Add(shop_ItemPanelPrefab.transform.GetChild(0).GetChild(i).gameObject);
+			shopItemList.Add(shop_ItemPanelPrefab.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(i).gameObject);
 
 		for (int i = 0; i < 25; i++)
 		{
@@ -47,13 +47,32 @@ public class MenuManager : MonoBehaviour
 			// Destroy(shopSkinList[i].transform.GetChild(1).gameObject);	//[2019-06-02 14:50:51] 라벨을 부숨
 			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 			
-			Sprite sprite = Resources.Load<Sprite>("Icon/C_icon_" + (i + 1));
+			// Sprite sprite = Resources.Load<Sprite>("Icon/Icon_lock");
+			// sprite = Resources.Load<Sprite>("Icon/Icon_lock");
+			// GameObject go = new GameObject();
+			// go.AddComponent<Image>().sprite = sprite;
+			// go.name = "Icon_lock";
+			// go.transform.SetParent(shopSkinList[i].transform);
+			// go.transform.localPosition =  new Vector2(-90,50);
+			// go.GetComponent<RectTransform>().sizeDelta = new Vector2(80,100);
+			// go.transform.localScale = new Vector3(1,1,1);
+
 			GameObject go = new GameObject();
-			go.AddComponent<Image>().sprite = sprite;
-			go.name = "BallIcon" + (i + 1);
+			go.AddComponent<Image>().sprite = tempSprite;
+			go.GetComponent<Image>().color = new Color(0,0,0,0.6f);
+			go.name = "Black_Layer";
 			go.transform.SetParent(shopSkinList[i].transform);
-			go.transform.transform.localPosition = Vector3.zero;
-			go.transform.transform.localScale = new Vector3(2,2,0);
+			go.transform.localPosition = Vector2.zero;
+			go.GetComponent<RectTransform>().sizeDelta = new Vector2(189,170);
+			go.transform.localScale = new Vector3(1,1,1);
+			
+			GameObject go2 = new GameObject();
+			go2.AddComponent<Image>().sprite = tempSprite2;
+			go2.name = "Icon_lock";
+			go2.transform.SetParent(go.transform);
+			go2.transform.localPosition =  new Vector2(-90,50);
+			go2.GetComponent<RectTransform>().sizeDelta = new Vector2(80,100);
+			go2.transform.localScale = new Vector3(1,1,1);
 		}
 
 		LoadGame();
@@ -200,7 +219,7 @@ public class MenuManager : MonoBehaviour
 		currency0 -= item4value;
 		SetItemCountText();
 	}
-	public void ButItem5()
+	public void BuyItem5()
 	{
 		CountItem5++;
 		currency0 -= item5value;
@@ -296,6 +315,13 @@ public class MenuManager : MonoBehaviour
 			shopItemList[3].transform.GetChild(2).GetComponent<Button>().interactable = false;
 		if(currency0 < item5value)
 			shopItemList[4].transform.GetChild(2).GetComponent<Button>().interactable = false;
+
+		for (int i = 0; i < 25; i++)
+		{
+			GameObject Balck_Layer = shopSkinList[i].transform.GetChild(3).gameObject;
+			if(isHaveSkinList[i] == true)
+				Balck_Layer.SetActive(false);
+		}
 
 		SaveGame();
 	}

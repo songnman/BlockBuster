@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using Spine;
+// using UnityEngine.EventSystems;
+// using Spine;
 using Spine.Unity;
 
 public class TouchContol : MonoBehaviour
@@ -21,6 +21,7 @@ public class TouchContol : MonoBehaviour
 	public BlockManager blockManagerSc;
 	public SoundManager soundManagerSc;
 	public ItemManager itemManagerSc;
+	public LoginManager loginManagerSc;
 
 	private LineRenderer ballLine;
 	private LineRenderer touchLine;
@@ -31,7 +32,7 @@ public class TouchContol : MonoBehaviour
 
 	void Awake() 
 	{
-		gStartCountText.transform.parent.gameObject.SetActive(true);
+		// gStartCountText.transform.parent.gameObject.SetActive(true);
 		StartCoroutine("StartCountDown");
 		// blockManagerSc.CreateBlockLineAndMove();
 		// isGameStart = true;
@@ -67,6 +68,7 @@ public class TouchContol : MonoBehaviour
 		ballLine = transform.GetChild(0).GetComponent<LineRenderer>();
 		touchLine = transform.GetChild(1).GetComponent<LineRenderer>();
 		// ballLine.material.mainTextureScale.Normalize();
+		ReturnClose();
 		fakeBallPrefab.SetActive(false);
 		skipButton.interactable = false;
 		
@@ -77,7 +79,7 @@ public class TouchContol : MonoBehaviour
 		firstBallObj = Instantiate(ballPrefab);
 		firstBallObj.transform.SetParent(ballGroup.transform);
 		firstBallObj.GetComponent<BallDefault>().touchControlSc = this;
-		firstBallObj.transform.position = new Vector2 (0, -4.0f);
+		firstBallObj.transform.position = new Vector2 (0, -4.65f);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation( 0, "Ball_off" , false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation( 0, "Idle" , true, 0);
 
@@ -110,7 +112,7 @@ public class TouchContol : MonoBehaviour
 
 	private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
 	{
-		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver && isGameStart)
+		if((Input.touchCount > 0 || touchFingerId > 0) && bottomWallSc.isBallStickBottom && !isReaimActivate && !isGameOver && isGameStart && !isPopupOn)
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			touchPosition.z = 0f;
@@ -185,6 +187,7 @@ public class TouchContol : MonoBehaviour
 					if(!isSwipeEnable || touchPosition.y > 4.0f)
 						break;
 					itemManagerSc.DeActivateItems();
+					gReturnBtn.interactable = false;
 					isSwipeEnable = false;
 					isPassMove = false;
 					if(shootDirection != Vector2.zero)
@@ -215,8 +218,11 @@ public class TouchContol : MonoBehaviour
 		Debug.Log("stickBallCount " + stickBallCount);
 
 	}
+	public int ballPower = 1;
 	public IEnumerator ShootBall()
 	{
+		ballPower = CalcPower();
+		Color trailColor = CalcPowerTrail();
 		bottomWallSc.isBallStickBottom = false;
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation(0, "Ball_on", false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation(0, "loop", false, 0);
@@ -233,17 +239,21 @@ public class TouchContol : MonoBehaviour
 		Destroy(firstBallObj);
 		firstBallObj = null;
 		bool shootOnce = false;
-		for (int i = 0; i < shootBallCount; i++)
+		for (int i = 0; i < shootBallCount / ballPower; i++)
 		{
 			if(!shootOnce)
 			{
 				soundManagerSc.PlayShoot();
 				shootOnce = true;
 			}
-			
+
 			ballList.Add(Instantiate(ballPrefab, shootPos, Quaternion.identity));
 			ballList[i].transform.SetParent(ballGroup.transform);
+			ParticleSystem trailParticle = ballList[i].transform.GetChild(1).GetComponent<ParticleSystem>();
+			ParticleSystem.TrailModule main = trailParticle.trails;
+			main.colorOverTrail = trailColor;
 			ballList[i].GetComponent<BallDefault>().touchControlSc = this;
+			
 
 
 			if (isBigBallActivate)
@@ -269,7 +279,7 @@ public class TouchContol : MonoBehaviour
 
 			yield return new WaitForSeconds(shootInterval - (0.05f * BallSpeedFactor));
 
-			shootBallRemain--;
+			shootBallRemain -= ballPower;
 			shootBallRemainText.text = "x" + shootBallRemain.ToString("N0");
 			// if (shootBallRemain < 1)
 			// {
@@ -280,16 +290,21 @@ public class TouchContol : MonoBehaviour
 		}
 		// yield return new WaitUntil(()=> shootBallRemain < 1);
 		// Debug.Log("shootBallCount " + shootBallCount);
-		yield return new WaitUntil(() => firstBallObj != null && (stickBallCount >= shootBallCount || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		yield return new WaitUntil(() => firstBallObj != null && (stickBallCount >= shootBallCount / ballPower || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
 		// Debug.Log("stickBallCount " + stickBallCount);
-
+		
 		skipButton.interactable = false;
 
 		// Debug.Log("All Balls are Stuck");
 
 		//? 볼 모으기////////////////////////////
+		if		( firstBallObj.transform.localPosition.x > 2.5)
+			firstBallObj.transform.localPosition = new Vector2 (2.5f, firstBallObj.transform.localPosition.y);
+		else if	( firstBallObj.transform.localPosition.x < -2.5)
+			firstBallObj.transform.localPosition = new Vector2 (-2.5f, firstBallObj.transform.localPosition.y);
+
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.SetAnimation(0, "Ball_off", false);
 		firstBallObj.transform.GetChild(0).GetComponent<SkeletonAnimation>().state.AddAnimation(0, "Idle", true, 0);
 
@@ -345,6 +360,8 @@ public class TouchContol : MonoBehaviour
 			isDoubleActivate = false;
 		}
 		itemManagerSc.CheckItemMethod();
+		gReturnBtn.interactable = true;
+
 	}
 
 	public void BallCountUpdate()
@@ -418,6 +435,9 @@ public class TouchContol : MonoBehaviour
 	public bool isGameOver = false;
 	public void GameOver()
 	{
+		gReturnPenal1.SetActive(false);
+		gReturnPenal2.SetActive(false);
+
 		isGameOver = true;
 		firstBallObj.SetActive(false);
 		MenuManager.currency0 += CalcReward();
@@ -434,29 +454,80 @@ public class TouchContol : MonoBehaviour
 
 	private int CalcReward()
 	{
-		if 		(blockManagerSc.shootCount > 99)
+		if		(blockManagerSc.shootCount > 499)
 		{
-			return blockManagerSc.shootCount * 3;
-		}
-		else if (blockManagerSc.shootCount > 199)
-		{
-			return blockManagerSc.shootCount * 5;
-		}
-		else if (blockManagerSc.shootCount > 299)
-		{
-			return blockManagerSc.shootCount * 10;
+			return blockManagerSc.shootCount * 50;
 		}
 		else if (blockManagerSc.shootCount > 399)
 		{
+			return blockManagerSc.shootCount * 30;
+		}
+		else if (blockManagerSc.shootCount > 299)
+		{
 			return blockManagerSc.shootCount * 15;
 		}
-		else if (blockManagerSc.shootCount > 499)
+		else if (blockManagerSc.shootCount > 199)
 		{
-			return blockManagerSc.shootCount * 20;
+			return blockManagerSc.shootCount * 10;
+		}
+		else if (blockManagerSc.shootCount > 99)
+		{
+			return blockManagerSc.shootCount * 5;
 		}
 		else
 		{
 			return blockManagerSc.shootCount;
+		}
+	}
+	public int CalcPower()
+	{
+		if		(blockManagerSc.shootCount > 399)
+		{
+			return 5;
+		}
+		else if (blockManagerSc.shootCount > 299)
+		{
+			return 4;
+		}
+		else if (blockManagerSc.shootCount > 199)
+		{
+			return 3;
+		}
+		else if (blockManagerSc.shootCount > 99)
+		{
+			return 2;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+	public Color CalcPowerTrail()
+	{
+		if		(ballPower == 5)
+		{
+			Debug.Log("빨강");
+			return new Color(0.95f, 0 ,0);
+		}
+		else if (ballPower == 4)
+		{
+			Debug.Log("보라");
+			return new Color(0.8f, 0.05f ,1);
+		}
+		else if (ballPower == 3)
+		{
+			Debug.Log("주황");
+			return new Color(1, 0.2f ,0.05f);
+		}
+		else if (ballPower == 2)
+		{	
+			Debug.Log("노랑");
+			return new Color(1, 1 ,0.05f);
+		}
+		else
+		{
+			Debug.Log("파랑");
+			return new Color(0, 0.05f ,1);
 		}
 	}
 
@@ -466,14 +537,40 @@ public class TouchContol : MonoBehaviour
 	}
 	public void Ranking()
 	{
-
+		loginManagerSc.OnBtnLoginClicked();
+		loginManagerSc.OnBtnReportScoreClicked(blockManagerSc.shootCount);
+		loginManagerSc.OnBtnShowLeaderboardClicked();
+		// blockManagerSc.shootCount
 	}
 	public void Advertise()
 	{
 
 	}	
+	public GameObject gReturnPenal1,gReturnPenal2;
+	public Button gReturnBtn;
+	bool isPopupOn = false;
 	public void ReturnFunc()
 	{
+		isPopupOn = true;
+		if(isGameOver)
+		{
+			gReturnPenal1.SetActive(true);
+			gReturnPenal2.SetActive(false);
+		}
+		else
+		{
+			gReturnPenal1.SetActive(false);
+			gReturnPenal2.SetActive(true);
+		}
+	}
+	public void ReturnToApp()
+	{
 		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
+	}
+	public void ReturnClose()
+	{
+		isPopupOn = false;
+		gReturnPenal1.SetActive(false);
+		gReturnPenal2.SetActive(false);
 	}
 }

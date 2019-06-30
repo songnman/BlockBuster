@@ -8,7 +8,7 @@ public class TopWall : MonoBehaviour
 	{
 		if(other.gameObject.CompareTag("Ball"))
 		{
-			other.gameObject.GetComponent<Rigidbody2D>().AddForce( Vector2.down * 10 );
+			other.gameObject.GetComponent<Rigidbody2D>().AddForce( Vector2.down * 5 );
 			
 			if(other.gameObject.GetComponent<BallDefault>().touchControlSc.isPierceActivate == true)
 				other.gameObject.GetComponent<BallDefault>().touchControlSc.PierceDeActivate();
