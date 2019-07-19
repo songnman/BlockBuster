@@ -28,6 +28,7 @@ public class BallDefault : MonoBehaviour
 			Instantiate(Resources.Load("Particles/Ember") as GameObject, other.contacts[0].point, Quaternion.identity).transform.SetParent(touchControlSc.particlePrefab.transform);
 			
 			isCollisionBlock = true;
+			
 		}
 	}
 }
