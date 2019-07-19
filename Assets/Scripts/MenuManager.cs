@@ -37,7 +37,6 @@ public class MenuManager : MonoBehaviour
 
 		for (int i = 0; i < 25; i++)
 		{
-			
 			shopSkinList.Add(shop_SkinPanelPrefab.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(i).gameObject);
 			skinToggleList.Add(shopSkinList[i].GetComponent<Toggle>());	//[2019-06-02 15:18:56] 토글리스트 생성
 			isHaveSkinList.Add(false);
@@ -73,8 +72,10 @@ public class MenuManager : MonoBehaviour
 			go2.transform.localPosition =  new Vector2(-90,50);
 			go2.GetComponent<RectTransform>().sizeDelta = new Vector2(80,100);
 			go2.transform.localScale = new Vector3(1,1,1);
-		}
 
+		}
+		if (File.Exists(Application.persistentDataPath + "/gamesave.save") == false)
+			ResetSaveGame();
 		LoadGame();
 		SetItemCountText();
 
@@ -177,7 +178,6 @@ public class MenuManager : MonoBehaviour
 		inpectorPreviewImage = Resources.Load<Sprite>("Icon/C_icon_" + skinNum);
 		skinToggleList[skinNum - 1].isOn = true;
 		SelectSkin();
-
 		SetItemCountText();
 	}
 	public void ShopClose()
@@ -246,7 +246,7 @@ public class MenuManager : MonoBehaviour
 			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 		}
 		Debug.Log("isHaveSkinList.Count = " + isHaveSkinList.Count);
-
+		SaveGame();
 		SetItemCountText();
 	}
 	static public Save CreateSaveGameObject()

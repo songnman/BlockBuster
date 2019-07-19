@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 1855476312117129955}
   - component: {fileID: 74657518525241311}
   - component: {fileID: 4399966907048095732}
+  - component: {fileID: 6809335639556605538}
   m_Layer: 14
   m_Name: BonusBall
   m_TagString: BonusBall
@@ -206,6 +207,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &6809335639556605538
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695953660812440118}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 100
+  m_LinearDrag: 10000
+  m_AngularDrag: 10000
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 2
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &767089916374496772
 GameObject:
   m_ObjectHideFlags: 0

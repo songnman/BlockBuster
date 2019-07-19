@@ -43,7 +43,7 @@ public class BlockDefault : MonoBehaviour
 				DestroyBlock01();
 			}
 		}
-		else if	(other.gameObject.tag == "Block")
+		else if	(other.gameObject.tag == "Block" || other.gameObject.tag == "BonusBall")
 		{
 			gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 			gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
