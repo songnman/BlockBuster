@@ -540,11 +540,10 @@ public class TouchContol : MonoBehaviour
 		loginManagerSc.OnBtnLoginClicked();
 		loginManagerSc.OnBtnReportScoreClicked(blockManagerSc.shootCount);
 		loginManagerSc.OnBtnShowLeaderboardClicked();
-		// blockManagerSc.shootCount
 	}
 	public void Advertise()
 	{
-
+		
 	}	
 	public GameObject gReturnPenal1,gReturnPenal2;
 	public Button gReturnBtn;

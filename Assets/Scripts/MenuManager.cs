@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -8,27 +8,70 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+	[Header("Shop Object")]
 	public GameObject shopPrefab;
+	public GameObject settingPrefab;
+	public GameObject pushTogglePrefab;
+	public GameObject termsOfServicePrefab;
 	public GameObject shop_ItemPanelPrefab;
 	public GameObject shop_SkinPanelPrefab;
 	public GameObject shop_SkinBuyBtnPrefab , shop_SkinEquipBtnPrefab;
 	public Image shop_SkinInspectorPreview;
-	public Text currency0Text, currency1Text;
-	 List<GameObject> shopItemList = new List<GameObject>();
-	 List<GameObject> shopSkinList = new List<GameObject>();
-	 List<Toggle> skinToggleList = new List<Toggle>();
+	List<GameObject> shopItemList = new List<GameObject>();
+	List<GameObject> shopSkinList = new List<GameObject>();
+	List<Toggle> skinToggleList = new List<Toggle>();
+	
+	[Header("Popup Object")]
+	public GameObject popup_DailyReward;
+	public GameObject popup_HottimeReward;
+	public GameObject popup_AdViewReward;
+	
+	[Header("ETC Object")]
+	public Text currency0Text;
+	public Text currency1Text;
+	public Sprite tempSprite, tempSprite2;
+	public Image blackLayer;
 
+	/////////////////////////////////////////////////////////////////////////////
 	static public int CountItem1, CountItem2, CountItem3, CountItem4, CountItem5;
 	static public int currency0, currency1;
 	static public List<bool> isHaveSkinList = new List<bool>();
 	static public int skinNum;
+	static public int viewAdDay, viewAdMonth, viewAdCount, loginDay, loginMonth;
+	static bool isGetDailyReward, isGetHottimeReward;
+	static bool isSetAlarm, isAllowTerms;
 	Sprite inpectorPreviewImage;
 	int item1value = 1000,	item2value = 400,	item3value = 150,	item4value = 160, item5value = 100;
-	public Sprite tempSprite, tempSprite2;
+	IEnumerator StartFade()
+	{
+		for (int i = 0; i < 51; i++)
+		{
+			blackLayer.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(new Color (1,1,1,0), new Color (1,1,1,1), i * 0.02f);
+			yield return new WaitForFixedUpdate();
+		}
+		yield return new WaitForSeconds(1);
+		for (int i = 0; i < 101; i++)
+		{
+			blackLayer.color = Color.Lerp(new Color (0,0,0,1), new Color (0,0,0,0), i * 0.01f);
+			blackLayer.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(new Color (1,1,1,1), new Color (1,1,1,0), i * 0.01f);
+			yield return new WaitForFixedUpdate();
+		}
+		Destroy(blackLayer.gameObject);
+	}
+	void Awake() 
+	{
+		blackLayer.gameObject.SetActive(true);
+		StartCoroutine(StartFade());
+	}
 	void Start()
 	{
+		Debug.Log(DateTime.UtcNow);
 		ShopClose();
-			
+		// if(!isSetAlarm)
+		// {
+		// 	Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(5), "블록버스터", "핫타임 보상을 수령하세요!", new Color(0, 0.6f, 1), Assets.SimpleAndroidNotifications.NotificationIcon.Message);
+		// 	isSetAlarm = true;
+		// }
 		if(skinNum < 1)
 			skinNum = 1;
 
@@ -40,21 +83,6 @@ public class MenuManager : MonoBehaviour
 			shopSkinList.Add(shop_SkinPanelPrefab.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(i).gameObject);
 			skinToggleList.Add(shopSkinList[i].GetComponent<Toggle>());	//[2019-06-02 15:18:56] 토글리스트 생성
 			isHaveSkinList.Add(false);
-
-			
-			// if (shopSkinList[i].transform.GetChild(1).GetComponent<Text>() != null)
-			// Destroy(shopSkinList[i].transform.GetChild(1).gameObject);	//[2019-06-02 14:50:51] 라벨을 부숨
-			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
-			
-			// Sprite sprite = Resources.Load<Sprite>("Icon/Icon_lock");
-			// sprite = Resources.Load<Sprite>("Icon/Icon_lock");
-			// GameObject go = new GameObject();
-			// go.AddComponent<Image>().sprite = sprite;
-			// go.name = "Icon_lock";
-			// go.transform.SetParent(shopSkinList[i].transform);
-			// go.transform.localPosition =  new Vector2(-90,50);
-			// go.GetComponent<RectTransform>().sizeDelta = new Vector2(80,100);
-			// go.transform.localScale = new Vector3(1,1,1);
 
 			GameObject go = new GameObject();
 			go.AddComponent<Image>().sprite = tempSprite;
@@ -76,10 +104,49 @@ public class MenuManager : MonoBehaviour
 		}
 		if (File.Exists(Application.persistentDataPath + "/gamesave.save") == false)
 			ResetSaveGame();
+		
 		LoadGame();
+		
+		if(DateTime.UtcNow.Day != loginDay || DateTime.UtcNow.Month != loginMonth)
+		{
+			loginDay			= DateTime.UtcNow.Day;
+			loginMonth			= DateTime.UtcNow.Month;
+			isGetDailyReward	= false;
+			isGetHottimeReward	= false;
+		}
+
+		if(!isGetDailyReward)
+		{
+			isGetDailyReward = true;
+			popup_DailyReward.SetActive(true);
+			currency1 += 10;
+		}
+		if(!isGetHottimeReward && DateTime.UtcNow.Hour >= 9 && DateTime.UtcNow.Hour < 13)
+		{
+			isGetHottimeReward = true;
+			popup_HottimeReward.SetActive(true);
+			currency0 += 10;
+			currency1 += 10;
+		}
+
+		if(!isAllowTerms)
+			termsOfServicePrefab.SetActive(true);
+		else
+			termsOfServicePrefab.SetActive(false);
+
 		SetItemCountText();
-
-
+	}
+	public void CloseDailyReward()
+	{
+		popup_DailyReward.SetActive(false);
+	}
+	public void CloseHottimeReward()
+	{
+		popup_HottimeReward.SetActive(false);
+	}
+	public void CloseAdViewReward()
+	{
+		popup_AdViewReward.SetActive(false);
 	}
 	public void SelectSkin()
 	{
@@ -183,6 +250,15 @@ public class MenuManager : MonoBehaviour
 	public void ShopClose()
 	{
 		shopPrefab.SetActive(false);
+		settingPrefab.SetActive(false);
+	}
+	public void CreditsOpen()
+	{
+		if(isSetAlarm)
+			pushTogglePrefab.GetComponent<Toggle>().isOn = true;
+		else
+			pushTogglePrefab.GetComponent<Toggle>().isOn = false;
+		settingPrefab.SetActive(true);
 	}
 	public void ToggleItem()
 	{
@@ -198,31 +274,31 @@ public class MenuManager : MonoBehaviour
 	public void BuyItem1()
 	{
 		CountItem1++;
-		currency0 -= item1value;
+		currency1 -= item1value;
 		SetItemCountText();
 	}
 	public void BuyItem2()
 	{
 		CountItem2++;
-		currency0 -= item2value;
+		currency1 -= item2value;
 		SetItemCountText();
 	}
 	public void BuyItem3()
 	{
 		CountItem3++;
-		currency0 -= item3value;
+		currency1 -= item3value;
 		SetItemCountText();
 	}
 	public void BuyItem4()
 	{
 		CountItem4++;
-		currency0 -= item4value;
+		currency1 -= item4value;
 		SetItemCountText();
 	}
 	public void BuyItem5()
 	{
 		CountItem5++;
-		currency0 -= item5value;
+		currency1 -= item5value;
 		SetItemCountText();
 	}
 	public void ResetSaveGame()
@@ -235,7 +311,9 @@ public class MenuManager : MonoBehaviour
 		skinNum = 1;
 		currency0 = 0;
 		currency1 = 0;
-		
+		viewAdCount = 0;
+		isGetDailyReward = false;
+		isGetHottimeReward = false;
 		isHaveSkinList = new List<bool>();
 		for (int i = 0; i < 25; i++)
 		{
@@ -246,8 +324,57 @@ public class MenuManager : MonoBehaviour
 			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 		}
 		Debug.Log("isHaveSkinList.Count = " + isHaveSkinList.Count);
+		Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
+		isAllowTerms = false;
 		SaveGame();
 		SetItemCountText();
+	}
+	public void TogglePush()
+	{
+		if(pushTogglePrefab.GetComponent<Toggle>().isOn)
+		{
+			isSetAlarm = true;
+		}
+		else
+		{
+			isSetAlarm = false;
+		}
+	}
+	public void ToggleAllowTerms()
+	{
+		if(termsOfServicePrefab.transform.GetChild(2).GetComponent<Toggle>().isOn)
+		{
+			isAllowTerms = true;
+			termsOfServicePrefab.transform.GetChild(0).GetComponent<Button>().interactable = true;
+		}
+		else
+		{
+			isAllowTerms = false;
+			termsOfServicePrefab.transform.GetChild(0).GetComponent<Button>().interactable = false;
+		}
+	}
+	public void OpenTermsOfService()
+	{
+		Application.OpenURL("https://docs.google.com/document/d/1Dc9a0AlZ8sQqCsV9AHuX9XeyE2w9U_dZbSW1-gMhcBs");
+	}
+	public void OpenToermsOfPush()
+	{
+		Application.OpenURL("https://docs.google.com/document/d/1m_ZT_mOWr4TWCTbzPIO4T4VcM5f6JtZFQv198A5pQVA");
+	}
+	public void ConfirmTerms()
+	{
+		SaveGame();
+		if(isSetAlarm)
+		{
+			Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
+			Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(5), "블록버스터", "핫타임 보상을 수령하세요!", new Color(0, 0.6f, 1), Assets.SimpleAndroidNotifications.NotificationIcon.Message);
+		}
+		else
+		{
+			Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
+		}
+
+		termsOfServicePrefab.SetActive(false);
 	}
 	static public Save CreateSaveGameObject()
 	{
@@ -262,6 +389,15 @@ public class MenuManager : MonoBehaviour
 		save.currency0 = currency0;
 		save.currency1 = currency1;
 		save.isHaveSkinList = isHaveSkinList;
+		save.viewAdDay = viewAdDay;
+		save.viewAdMonth = viewAdMonth;
+		save.viewAdCount = viewAdCount;
+		save.loginDay = loginDay;
+		save.loginMonth = loginMonth;
+		save.isGetDailyReward = isGetDailyReward;
+		save.isGetHottimeReward = isGetHottimeReward;
+		save.isSetAlarm = isSetAlarm;
+		save.isAllowTerms = isAllowTerms;
 		return save;
 	}
 	static public void SaveGame()
@@ -282,15 +418,28 @@ public class MenuManager : MonoBehaviour
 			Save save = (Save)bf.Deserialize(file);
 			file.Close();
 			
-			CountItem1		= save.CountItem1;
-			CountItem2		= save.CountItem2;
-			CountItem3		= save.CountItem3;
-			CountItem4		= save.CountItem4;
-			CountItem5		= save.CountItem5;
-			skinNum			= save.skinNum;
-			currency0		= save.currency0;
-			currency1		= save.currency1;
-			isHaveSkinList	= save.isHaveSkinList;
+			CountItem1			= save.CountItem1;
+			CountItem2			= save.CountItem2;
+			CountItem3			= save.CountItem3;
+			CountItem4			= save.CountItem4;
+			CountItem5			= save.CountItem5;
+			skinNum				= save.skinNum;
+			currency0			= save.currency0;
+			currency1			= save.currency1;
+			isHaveSkinList		= save.isHaveSkinList;
+			viewAdDay			= save.viewAdDay;
+			viewAdMonth			= save.viewAdMonth;
+			viewAdCount			= save.viewAdCount;
+			loginDay			= save.loginDay;
+			loginMonth			= save.loginMonth;
+			isGetDailyReward	= save.isGetDailyReward;
+			isGetHottimeReward	= save.isGetHottimeReward;
+			isSetAlarm			= save.isSetAlarm;
+			isAllowTerms		= save.isAllowTerms;
+		}
+		else
+		{
+			SaveGame();
 		}
 	}
 	public void SetItemCountText()
@@ -305,15 +454,19 @@ public class MenuManager : MonoBehaviour
 		currency1Text.text = currency1.ToString();
 		
 		//[2019-06-19 00:20:41] 아이템 구입 가능여부 판단
-		if(currency0 < item1value)
+		for (int i = 0; i < shopItemList.Count; i++)
+		{
+			shopItemList[i].transform.GetChild(2).GetComponent<Button>().interactable = true;
+		}
+		if(currency1 < item1value)
 			shopItemList[0].transform.GetChild(2).GetComponent<Button>().interactable = false;
-		if(currency0 < item2value)
+		if(currency1 < item2value)
 			shopItemList[1].transform.GetChild(2).GetComponent<Button>().interactable = false;
-		if(currency0 < item3value)
+		if(currency1 < item3value)
 			shopItemList[2].transform.GetChild(2).GetComponent<Button>().interactable = false;
-		if(currency0 < item4value)
+		if(currency1 < item4value)
 			shopItemList[3].transform.GetChild(2).GetComponent<Button>().interactable = false;
-		if(currency0 < item5value)
+		if(currency1 < item5value)
 			shopItemList[4].transform.GetChild(2).GetComponent<Button>().interactable = false;
 
 		for (int i = 0; i < 25; i++)

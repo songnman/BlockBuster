@@ -53,6 +53,16 @@ public class ItemManager : MonoBehaviour
 		MenuManager.SaveGame();
 		isUsed1 = true;
 	}
+	public void AdMoveUpFunc()
+	{
+		int childCount = blockManagerSc.transform.childCount;
+		for (int i = 0; i < childCount; i++)
+		{
+			blockManagerSc.StartCoroutine("MoveUpBlock", i);
+		}
+		DeActivateItems();
+		touchContolSc.isGameOver = false;
+	}
 	public void PierceFunc()
 	{
 		blockManagerSc.RigidBodySwitch(false);

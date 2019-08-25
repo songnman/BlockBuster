@@ -10,22 +10,18 @@ public class SoundManager : MonoBehaviour
 	public GameObject fxPrefab;
 	void Start()
 	{
-
 		if(bgmPrefab != null && fxPrefab != null)
 		{
 			bgmSourceList = new List<AudioSource>();
 			fxSourceList = new List<AudioSource>();
-			
 			int bgmLength = bgmPrefab.transform.childCount;
 			for (int i = 0; i < bgmLength; i++)
 			{
 				bgmSourceList.Add(bgmPrefab.transform.GetChild(i).GetComponent<AudioSource>());
-				bgmSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
-				bgmSourceList[i].loop = true;
-				bgmSourceList[i].Play();
-				if(i != 0)
-					bgmSourceList[i].volume = 0;
+				bgmSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i + 1)) as AudioClip;
 			}
+			PlayMusicLoop();
+
 			int fxLength = fxPrefab.transform.childCount;
 			for (int i = 0; i < fxLength; i++)
 			{
@@ -101,5 +97,22 @@ public class SoundManager : MonoBehaviour
 			yield return new WaitForSeconds(changeInterval);
 		}
 	}
-
+	float curTime = 0;
+	double loopTime = 0;
+	void Update()
+	{
+		loopTime -= Time.deltaTime;
+		if(loopTime < 0)
+			PlayMusicLoop();
+		
+	}
+	private void PlayMusicLoop()
+	{
+		int bgmLength = bgmPrefab.transform.childCount;
+		for (int i = 0; i < bgmLength; i++)
+		{
+			bgmSourceList[i].Play();
+		}
+		loopTime = (double)bgmSourceList[0].clip.samples / bgmSourceList[0].clip.frequency;
+	}
 }

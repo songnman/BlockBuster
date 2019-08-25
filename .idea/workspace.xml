@@ -2,12 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e54c74ca-469e-4daa-85b0-8b26bfbba332" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.105.0.dll" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.105.0.dll.mdb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.105.0.dll.mdb.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.105.0.dll.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.105.0.dll" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.105.0.dll.mdb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.105.0.dll.mdb.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.105.0.dll.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.105.0.dll" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.105.0.dll.mdb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.105.0.dll.mdb.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.105.0.dll.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/play-services-resolver_v1.2.105.0.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/play-services-resolver_v1.2.105.0.txt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.core.common-1.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.core.common-1.0.0.jar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.lifecycle.common-1.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.lifecycle.common-1.0.0.jar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/android.arch.lifecycle.runtime-1.0.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-annotations-26.1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-annotations-26.1.0.jar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-compat-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-compat-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-core-ui-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-core-ui-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-core-utils-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-core-utils-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-fragment-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-fragment-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-media-compat-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-media-compat-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.android.support.support-v4-26.1.0.aar.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-basement-16.0.1.aar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-basement-16.0.1.aar.meta" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll" afterPath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb" afterPath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-16.0.1.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-16.0.1.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-api-phone-16.0.0.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-api-phone-16.0.0.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-base-16.0.0.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-auth-base-16.0.0.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-base-16.0.1.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-base-16.0.1.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-drive-16.0.0.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-drive-16.0.0.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-games-17.0.0.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-games-17.0.0.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-nearby-16.0.0.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-nearby-16.0.0.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-tasks-16.0.1.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.android.gms.play-services-tasks-16.0.1.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.games.gpgs-plugin-support-0.9.64.aar" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/com.google.games.gpgs-plugin-support-0.9.64.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb.meta" afterPath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.meta" afterPath="$PROJECT_DIR$/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.meta" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scenes/App_Scene.unity" afterPath="$PROJECT_DIR$/Assets/Scenes/App_Scene.unity" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/BlockManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/BlockManager.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/FPSDisplay.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/FPSDisplay.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/TouchContol.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/TouchContol.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BlockBuster.sln" afterPath="$PROJECT_DIR$/BlockBuster.sln" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" afterPath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" />
     </list>
@@ -36,8 +84,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="260" />
-    <option name="y" value="70" />
+    <option name="x" value="2259" />
+    <option name="y" value="272" />
     <option name="width" value="1400" />
     <option name="height" value="990" />
   </component>
@@ -66,13 +114,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="AndroidView">
         <subPane />
       </pane>
+      <pane id="ProjectPane" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -166,7 +214,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="260" y="70" width="1400" height="990" extended-state="0" />
+    <frame x="2259" y="272" width="1400" height="990" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />

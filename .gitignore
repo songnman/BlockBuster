@@ -6,7 +6,7 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
-
+.VSCodeCounter/
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
