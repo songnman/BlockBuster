@@ -137,6 +137,10 @@ public class MenuManager : MonoBehaviour
 
 		SetItemCountText();
 	}
+	public void NewGame()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+	}
 	public void CloseDailyReward()
 	{
 		popup_DailyReward.SetActive(false);
