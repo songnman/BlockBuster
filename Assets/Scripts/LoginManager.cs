@@ -36,13 +36,13 @@ public class LoginManager : MonoBehaviour {
 				if (success)
 				{
 					Debug.Log(Social.localUser.userName);
-					txtLog.text += "name : " + Social.localUser.userName + "\n";
+					// txtLog.text += "name : " + Social.localUser.userName + "\n";
 				}
 				else
 				{
-					txtLog.transform.parent.gameObject.SetActive(true);
+					// txtLog.transform.parent.gameObject.SetActive(true);
 					Debug.Log("Login Fail");
-					txtLog.text += "Login Fail\n";
+					// txtLog.text += "Login Fail\n";
 				}
 			});
 	}
