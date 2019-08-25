@@ -331,14 +331,10 @@ public class MenuManager : MonoBehaviour
 	}
 	public void TogglePush()
 	{
-		if(pushTogglePrefab.GetComponent<Toggle>().isOn)
-		{
+		if(termsOfServicePrefab.transform.GetChild(4).GetComponent<Toggle>().isOn == true)
 			isSetAlarm = true;
-		}
 		else
-		{
 			isSetAlarm = false;
-		}
 	}
 	public void ToggleAllowTerms()
 	{
@@ -373,7 +369,6 @@ public class MenuManager : MonoBehaviour
 		{
 			Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
 		}
-
 		termsOfServicePrefab.SetActive(false);
 	}
 	static public Save CreateSaveGameObject()
