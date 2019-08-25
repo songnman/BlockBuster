@@ -446,7 +446,7 @@ public class TouchContol : MonoBehaviour
 		currency0Text.text = MenuManager.currency0.ToString();
 		currency1Text.text = MenuManager.currency1.ToString();
 		result_LastStageText.text = "STAGE " + blockManagerSc.shootCount.ToString();
-		result_Currency0Text.text = CalcReward().ToString();
+		result_Currency0Text.text = "x " + CalcReward().ToString();
 		result_Currency1Text.text = 0.ToString();
 		
 		ResultPenalPrefab.SetActive(true);

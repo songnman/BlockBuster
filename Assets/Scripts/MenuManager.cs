@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
 	public GameObject popup_DailyReward;
 	public GameObject popup_HottimeReward;
 	public GameObject popup_AdViewReward;
+	public GameObject popup_ResetAsk;
 	
 	[Header("ETC Object")]
 	public Text currency0Text;
@@ -50,10 +51,10 @@ public class MenuManager : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 		yield return new WaitForSeconds(1);
-		for (int i = 0; i < 101; i++)
+		for (int i = 0; i < 51; i++)
 		{
-			blackLayer.color = Color.Lerp(new Color (0,0,0,1), new Color (0,0,0,0), i * 0.01f);
-			blackLayer.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(new Color (1,1,1,1), new Color (1,1,1,0), i * 0.01f);
+			blackLayer.color = Color.Lerp(new Color (0,0,0,1), new Color (0,0,0,0), i * 0.02f);
+			blackLayer.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(new Color (1,1,1,1), new Color (1,1,1,0), i * 0.02f);
 			yield return new WaitForFixedUpdate();
 		}
 		Destroy(blackLayer.gameObject);
@@ -99,7 +100,7 @@ public class MenuManager : MonoBehaviour
 			go2.transform.SetParent(go.transform);
 			go2.transform.localPosition =  new Vector2(-90,50);
 			go2.GetComponent<RectTransform>().sizeDelta = new Vector2(80,100);
-			go2.transform.localScale = new Vector3(1,1,1);
+			go2.transform.localScale = new Vector3(0.8f,0.8f,1);
 
 		}
 		if (File.Exists(Application.persistentDataPath + "/gamesave.save") == false)
@@ -147,6 +148,10 @@ public class MenuManager : MonoBehaviour
 	public void CloseAdViewReward()
 	{
 		popup_AdViewReward.SetActive(false);
+	}
+	public void CloseResetAsk()
+	{
+		popup_ResetAsk.SetActive(false);
 	}
 	public void SelectSkin()
 	{
@@ -233,11 +238,6 @@ public class MenuManager : MonoBehaviour
 			SetItemCountText();
 			SelectSkin();
 		}
-	}
-	public void ResetGame()
-	{
-		// LoadGame();
-		UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
 	}
 	public void ShopOpen()
 	{
@@ -328,6 +328,7 @@ public class MenuManager : MonoBehaviour
 		isAllowTerms = false;
 		SaveGame();
 		SetItemCountText();
+		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
 	}
 	public void TogglePush()
 	{
@@ -370,6 +371,10 @@ public class MenuManager : MonoBehaviour
 			Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
 		}
 		termsOfServicePrefab.SetActive(false);
+	}
+	public void OpenResetAsk()
+	{
+		popup_ResetAsk.SetActive(true);
 	}
 	static public Save CreateSaveGameObject()
 	{
