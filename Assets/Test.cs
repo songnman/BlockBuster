@@ -59,11 +59,11 @@ public class Test : MonoBehaviour
 	}
 	static bool callbackCalled = false;
  
+	//?[2019-08-28 01:30:20] 리워드 영상 시청 시 종료되는 현상을 콜백 함수로 해결 https://forum.unity.com/threads/crash-on-android-dismissing-rewarded-video-monetization-3-0-plugin.576064
 	static void Callback()
 	{
 		callbackCalled = true;
 	}
-	
 	void Update()
 	{
 		if( callbackCalled )
