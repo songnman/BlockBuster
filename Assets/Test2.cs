@@ -56,7 +56,7 @@ public class Test2 : MonoBehaviour
 	void OnAdStarted(object sender, EventArgs e) { Debug.Log("OnAdStarted"); }
 	void OnAdRewarded(object sender, Reward e) 
 	{ 
-		sItemManager.AdMoveUpFunc();
+		// sItemManager.AdMoveUpFunc();
 		
 	}
 	void OnAdClosed(object sender, EventArgs e)

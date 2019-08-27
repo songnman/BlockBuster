@@ -157,6 +157,15 @@ public class MenuManager : MonoBehaviour
 	{
 		popup_ResetAsk.SetActive(false);
 	}
+	public void AdViewRewardMethod()
+	{
+		viewAdDay = DateTime.UtcNow.Day;
+		viewAdMonth = DateTime.UtcNow.Month;
+		viewAdCount ++;
+		currency1 += 30;
+		popup_AdViewReward.SetActive(true);
+		SetItemCountText();
+	}
 	public void SelectSkin()
 	{
 		//[2019-06-20 01:10:07] 선택한 스킨을 프리뷰에 뿌려줌

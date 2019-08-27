@@ -34,7 +34,7 @@ class BuildVersion : IPreprocessBuildWithReport
  
             if (isNumber && versionIncr.Length - 1 >= i)
             {
-                if (i > 0 && versionIncr[i] + numberValue > 9)
+                if (i > 0 && versionIncr[i] + numberValue > 99)
                 {
                     versionIncr[i - 1]++;
  

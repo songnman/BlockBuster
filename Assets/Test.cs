@@ -57,21 +57,29 @@ public class Test : MonoBehaviour
 			LoadAd();
 		}
 	}
-
+	static bool callbackCalled = false;
+ 
+	static void Callback()
+	{
+		callbackCalled = true;
+	}
+	
+	void Update()
+	{
+		if( callbackCalled )
+		{
+			sMenuManager.AdViewRewardMethod();
+			callbackCalled = false;
+		}
+	}
 	void OnAdLoaded(object sender, EventArgs args) { Debug.Log("OnAdLoaded"); }
 	void OnAdFailedToLoad(object sender, AdFailedToLoadEventArgs e) { Debug.Log("OnAdFailedToLoad"); }
 	void OnAdOpening(object sender, EventArgs e) { Debug.Log("OnAdOpening"); }
 	void OnAdStarted(object sender, EventArgs e) { Debug.Log("OnAdStarted"); }
-	void OnAdRewarded(object sender, Reward e) 
-	{ 
-		MenuManager.viewAdDay = DateTime.UtcNow.Day;
-		MenuManager.viewAdMonth = DateTime.UtcNow.Month;
-		MenuManager.viewAdCount ++;
-		MenuManager.currency1 += 30;
-		sMenuManager.popup_AdViewReward.SetActive(true);
-		
-		sMenuManager.SetItemCountText();
-		Debug.Log("OnAdRewarded"); 
+	static void OnAdRewarded(object sender, Reward e) 
+	{
+		callbackCalled = true;
+		Debug.Log("OnAdRewarded");
 	}
 	void OnAdClosed(object sender, EventArgs e)
 	{
