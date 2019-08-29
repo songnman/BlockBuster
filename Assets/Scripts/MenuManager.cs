@@ -32,6 +32,8 @@ public class MenuManager : MonoBehaviour
 	public Text currency1Text;
 	public Sprite tempSprite, tempSprite2;
 	public Image blackLayer;
+	public Slider fxSliderObj, bgmSliderObj;
+	public AudioSource bgmTrackObj;
 
 	/////////////////////////////////////////////////////////////////////////////
 	static public int CountItem1, CountItem2, CountItem3, CountItem4, CountItem5;
@@ -41,6 +43,7 @@ public class MenuManager : MonoBehaviour
 	static public int viewAdDay, viewAdMonth, viewAdCount, loginDay, loginMonth;
 	static bool isGetDailyReward, isGetHottimeReward;
 	static bool isSetAlarm, isAllowTerms;
+	static public float fxVol, bgmVol;
 	Sprite inpectorPreviewImage;
 	int item1value = 1000,	item2value = 400,	item3value = 150,	item4value = 160, item5value = 100;
 	IEnumerator StartFade()
@@ -67,7 +70,6 @@ public class MenuManager : MonoBehaviour
 	void Start()
 	{
 		Debug.Log(DateTime.UtcNow);
-		ShopClose();
 		// if(!isSetAlarm)
 		// {
 		// 	Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(5), "블록버스터", "핫타임 보상을 수령하세요!", new Color(0, 0.6f, 1), Assets.SimpleAndroidNotifications.NotificationIcon.Message);
@@ -107,6 +109,7 @@ public class MenuManager : MonoBehaviour
 			ResetSaveGame();
 		
 		LoadGame();
+		ShopClose();
 		
 		if(DateTime.UtcNow.Day != loginDay || DateTime.UtcNow.Month != loginMonth)
 		{
@@ -129,11 +132,14 @@ public class MenuManager : MonoBehaviour
 			currency0 += 10;
 			currency1 += 10;
 		}
-
+		
+		//[2019-08-30 00:40:45] 약관 확인 
 		if(!isAllowTerms)
 			termsOfServicePrefab.SetActive(true);
 		else
 			termsOfServicePrefab.SetActive(false);
+		//[2019-08-30 00:40:54] BGM 볼륨 불러오기
+		bgmTrackObj.volume = bgmVol;
 
 		SetItemCountText();
 	}
@@ -264,6 +270,7 @@ public class MenuManager : MonoBehaviour
 	{
 		shopPrefab.SetActive(false);
 		settingPrefab.SetActive(false);
+		SaveGame();
 	}
 	public void CreditsOpen()
 	{
@@ -271,6 +278,9 @@ public class MenuManager : MonoBehaviour
 			pushTogglePrefab.GetComponent<Toggle>().isOn = true;
 		else
 			pushTogglePrefab.GetComponent<Toggle>().isOn = false;
+		fxSliderObj.value = fxVol;
+		bgmSliderObj.value = bgmVol;
+
 		settingPrefab.SetActive(true);
 	}
 	public void ToggleItem()
@@ -316,17 +326,20 @@ public class MenuManager : MonoBehaviour
 	}
 	public void ResetSaveGame()
 	{
-		CountItem1 = 0;
-		CountItem2 = 0;
-		CountItem3 = 0;
-		CountItem4 = 0;
-		CountItem5 = 0;
-		skinNum = 1;
-		currency0 = 0;
-		currency1 = 0;
-		viewAdCount = 0;
-		isGetDailyReward = false;
-		isGetHottimeReward = false;
+		CountItem1			= 0;
+		CountItem2			= 0;
+		CountItem3			= 0;
+		CountItem4			= 0;
+		CountItem5			= 0;
+		skinNum				= 1;
+		currency0			= 0;
+		currency1			= 0;
+		viewAdCount			= 0;
+		isGetDailyReward	= false;
+		isGetHottimeReward	= false;
+		fxVol				= 0.5f;
+		bgmVol				= 0.5f;
+		isAllowTerms		= false;
 		isHaveSkinList = new List<bool>();
 		for (int i = 0; i < 25; i++)
 		{
@@ -337,10 +350,8 @@ public class MenuManager : MonoBehaviour
 			// Debug.Log((i+1) +" "+ isHaveSkinList[i]);
 		}
 		Debug.Log("isHaveSkinList.Count = " + isHaveSkinList.Count);
-		Assets.SimpleAndroidNotifications.NotificationManager.CancelAll();
-		isAllowTerms = false;
+		Assets.SimpleAndroidNotifications.NotificationManager.CancelAll(); //모든 알람 제거
 		SaveGame();
-		SetItemCountText();
 		UnityEngine.SceneManagement.SceneManager.LoadScene("App_Scene");
 	}
 	public void TogglePush()
@@ -389,28 +400,39 @@ public class MenuManager : MonoBehaviour
 	{
 		popup_ResetAsk.SetActive(true);
 	}
+	public void OnFXValueChange()
+	{
+		fxVol = fxSliderObj.value;
+	}
+	public void OnBGMValueChange()
+	{
+		bgmVol = bgmSliderObj.value;
+		bgmTrackObj.volume = bgmVol;
+	}
 	static public Save CreateSaveGameObject()
 	{
 		Save save = new Save();
 
-		save.CountItem1 = CountItem1;
-		save.CountItem2 = CountItem2;
-		save.CountItem3 = CountItem3;
-		save.CountItem4 = CountItem4;
-		save.CountItem5 = CountItem5;
-		save.skinNum = skinNum;
-		save.currency0 = currency0;
-		save.currency1 = currency1;
-		save.isHaveSkinList = isHaveSkinList;
-		save.viewAdDay = viewAdDay;
-		save.viewAdMonth = viewAdMonth;
-		save.viewAdCount = viewAdCount;
-		save.loginDay = loginDay;
-		save.loginMonth = loginMonth;
-		save.isGetDailyReward = isGetDailyReward;
-		save.isGetHottimeReward = isGetHottimeReward;
-		save.isSetAlarm = isSetAlarm;
-		save.isAllowTerms = isAllowTerms;
+		save.CountItem1			= CountItem1;
+		save.CountItem2			= CountItem2;
+		save.CountItem3			= CountItem3;
+		save.CountItem4			= CountItem4;
+		save.CountItem5			= CountItem5;
+		save.skinNum			= skinNum;
+		save.currency0			= currency0;
+		save.currency1			= currency1;
+		save.isHaveSkinList		= isHaveSkinList;
+		save.viewAdDay			= viewAdDay;
+		save.viewAdMonth		= viewAdMonth;
+		save.viewAdCount		= viewAdCount;
+		save.loginDay			= loginDay;
+		save.loginMonth			= loginMonth;
+		save.isGetDailyReward	= isGetDailyReward;
+		save.isGetHottimeReward	= isGetHottimeReward;
+		save.isSetAlarm			= isSetAlarm;
+		save.isAllowTerms		= isAllowTerms;
+		save.fxVol				= fxVol;
+		save.bgmVol				= bgmVol;
 		return save;
 	}
 	static public void SaveGame()
@@ -449,6 +471,8 @@ public class MenuManager : MonoBehaviour
 			isGetHottimeReward	= save.isGetHottimeReward;
 			isSetAlarm			= save.isSetAlarm;
 			isAllowTerms		= save.isAllowTerms;
+			fxVol				= save.fxVol;
+			bgmVol				= save.bgmVol;
 		}
 		else
 		{

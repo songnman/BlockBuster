@@ -19,6 +19,10 @@ public class SoundManager : MonoBehaviour
 			{
 				bgmSourceList.Add(bgmPrefab.transform.GetChild(i).GetComponent<AudioSource>());
 				bgmSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i + 1)) as AudioClip;
+				if(i != 0)
+					bgmSourceList[i].volume = 0;
+				else
+					bgmSourceList[i].volume = MenuManager.bgmVol;
 			}
 			PlayMusicLoop();
 
@@ -26,11 +30,7 @@ public class SoundManager : MonoBehaviour
 			for (int i = 0; i < fxLength; i++)
 			{
 				fxSourceList.Add(fxPrefab.transform.GetChild(i).GetComponent<AudioSource>());
-				// fxSourceList[i].clip = Resources.Load("Sounds/BGM/" + (i+1)) as AudioClip;
-				// fxSourceList[i].loop = true;
-				// fxSourceList[i].Play();
-				// if(i != 0)
-				// 	fxSourceList[i].volume = 0;
+				fxSourceList[i].volume = MenuManager.fxVol;
 			}
 		}
 	}
@@ -56,7 +56,7 @@ public class SoundManager : MonoBehaviour
 			hitBallCount++;
 
 		int i = hitBallCount;
-		object[] parms = new object[3] { bgmSourceList[i], 1.0f, 0.1f };
+		object[] parms = new object[3] { bgmSourceList[i], 1.0f * MenuManager.bgmVol, 0.1f };
 		StartCoroutine("ChangeSoundVolUp", parms);
 	}	
 	public void SoundReset()
