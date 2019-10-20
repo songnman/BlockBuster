@@ -10,7 +10,7 @@ public class Test : MonoBehaviour
 	
 	void Start ()
 	{
-		appId = "ca-app-pub-5838042073158481~7156027649";
+		appId = "ca-app-pub-5838042073158481~1651838302";
 		MobileAds.Initialize(appId);
 		ad = RewardBasedVideoAd.Instance;
 		
@@ -34,7 +34,8 @@ public class Test : MonoBehaviour
 	void LoadAd()
 	{
 		AdRequest request = new AdRequest.Builder().Build();
-		unitId = "ca-app-pub-3940256099942544/5224354917"; //테스트 유닛 ID
+		// unitId = "ca-app-pub-3940256099942544/5224354917"; //테스트 유닛 ID
+		unitId = "ca-app-pub-5838042073158481/7502930788"; //가용 유닛ID
 		ad.LoadAd(request, unitId);
     }
 

@@ -293,11 +293,15 @@ public class TouchContol : MonoBehaviour
 		yield return new WaitUntil(() => firstBallObj != null && (stickBallCount >= shootBallCount / ballPower || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
-		// Debug.Log("stickBallCount " + stickBallCount);
+		
+		if(blockManagerSc.gameObject.transform.childCount < 1)
+			{
+				ballCount++;
+				ballCleanUp++;
+				Debug.Log("ballCleanUp : " + ballCleanUp);
+			}
 		
 		skipButton.interactable = false;
-
-		// Debug.Log("All Balls are Stuck");
 
 		//? 볼 모으기////////////////////////////
 		if		( firstBallObj.transform.localPosition.x > 2.5)
@@ -446,7 +450,7 @@ public class TouchContol : MonoBehaviour
 		currency0Text.text = MenuManager.currency0.ToString();
 		currency1Text.text = MenuManager.currency1.ToString();
 		result_LastStageText.text = "STAGE " + blockManagerSc.shootCount.ToString();
-		result_Currency0Text.text = "x " + CalcReward().ToString();
+		result_Currency0Text.text = "x " + (CalcReward() + ballCleanUp * 100).ToString();
 		result_Currency1Text.text = 0.ToString();
 		
 		ResultPenalPrefab.SetActive(true);
@@ -548,6 +552,8 @@ public class TouchContol : MonoBehaviour
 	public GameObject gReturnPenal1,gReturnPenal2;
 	public Button gReturnBtn;
 	bool isPopupOn = false;
+	private int ballCleanUp = 0;
+
 	public void ReturnFunc()
 	{
 		isPopupOn = true;
