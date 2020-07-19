@@ -1,30 +1,3 @@
-<<<<<<< HEAD
-# =============== #
-# Unity generated #
-# =============== #
-
-Temp/
-Obj/
-UnityGenerated/
-Library/
-.VSCodeCounter/
-# ===================================== #
-# Visual Studio / MonoDevelop generated #
-# ===================================== #
-
-ExportedObj/
-*.svd
-*.userprefs
-*.csproj
-*.pidb
-*.suo
-*.sln
-*.user
-*.unityproj
-*.booproj
-
-# ===================================== #
-=======
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
@@ -85,4 +58,3 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
->>>>>>> aef7aec1b9ba1a1984f7e3f19f145d6cc69652aa

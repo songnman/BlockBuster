@@ -290,7 +290,12 @@ public class TouchContol : MonoBehaviour
 		}
 		// yield return new WaitUntil(()=> shootBallRemain < 1);
 		// Debug.Log("shootBallCount " + shootBallCount);
-		yield return new WaitUntil(() => firstBallObj != null && (stickBallCount >= shootBallCount / ballPower || blockManagerSc.gameObject.transform.childCount < 1)); // [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+		yield return new WaitUntil(() => firstBallObj != null && 
+			(
+				stickBallCount >= shootBallCount / ballPower || 		// [2019-03-09 17:05:43] 마지막 공이 부착됐을 때.
+				blockManagerSc.gameObject.transform.childCount < 1		// [2019-10-28 22:35:05] 모든 블럭이 사라졌을 때
+			)
+		);
 		hitBallCount = 0;
 		BallSpeedFactor.ToString();
 		
@@ -510,27 +515,27 @@ public class TouchContol : MonoBehaviour
 	{
 		if		(ballPower == 5)
 		{
-			Debug.Log("빨강");
+			// Debug.Log("빨강");
 			return new Color(0.95f, 0 ,0);
 		}
 		else if (ballPower == 4)
 		{
-			Debug.Log("보라");
+			// Debug.Log("보라");
 			return new Color(0.8f, 0.05f ,1);
 		}
 		else if (ballPower == 3)
 		{
-			Debug.Log("주황");
+			// Debug.Log("주황");
 			return new Color(1, 0.2f ,0.05f);
 		}
 		else if (ballPower == 2)
 		{	
-			Debug.Log("노랑");
+			// Debug.Log("노랑");
 			return new Color(1, 1 ,0.05f);
 		}
 		else
 		{
-			Debug.Log("파랑");
+			// Debug.Log("파랑");
 			return new Color(0, 0.05f ,1);
 		}
 	}

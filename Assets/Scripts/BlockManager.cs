@@ -263,8 +263,8 @@ public class BlockManager : MonoBehaviour
 		}
 	}
 
-	private void Update() {
-		if(Input.GetKeyDown(KeyCode.F1))
-			CreateBlockLineAndMove();
-	}
+	// private void Update() {
+	// 	if(Input.GetKeyDown(KeyCode.F1))
+	// 		CreateBlockLineAndMove();
+	// }
 }

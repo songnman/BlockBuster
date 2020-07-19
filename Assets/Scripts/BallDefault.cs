@@ -20,8 +20,14 @@ public class BallDefault : MonoBehaviour
 		if(other.gameObject.tag != "Bottom")
 		{
 			isBallCollision = true;
+			if(GetComponent<Rigidbody2D>().velocity.magnitude < 10)
+			{
+				Vector2 vDirection = GetComponent<Rigidbody2D>().velocity.normalized;
+				// Debug.Log("direction : " + vDirection);
+				GetComponent<Rigidbody2D>().AddForce(vDirection);
+				// Debug.Log("force : " +GetComponent<Rigidbody2D>().velocity.magnitude);
+			}
 		}
-
 		if(other.gameObject.tag == "Block")
 		{
 			touchControlSc.hitBallCount++;
